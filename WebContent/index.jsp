@@ -64,9 +64,13 @@ nav ul a {
 aside {
 	float: right;
 	margin: 0 1.5%;
-    width: 10%;
-    
+    width: 10%;    
 }
+
+#websiteLogo {
+	float: left;
+}
+
 #wrapper #content {
     border: 1px ridge #999;
     height: auto;
@@ -133,12 +137,17 @@ aside {
         </div>
     </div>
 </div>
+
+
+
 <aside>
 	<ul>
     <font size="3">
     <a href="#" style="color:white">Main page</a>
-    <li><a href="#" style="color:white">Student Projects</a></li>
-    <li><a href="#" style="color:white">Chapel Livestream</a></li>
+    <li><a href="http://localhost:8080/Kiosk/index.jsp" style="color:white">Slide Show 1</a></li>
+    <li><a href="http://localhost:8080/Kiosk/slideshow2.jsp" style="color:white">Slide Show 2</a></li>
+    <li><a href="http://localhost:8080/Kiosk/WordDoc.jsp" style="color:white">Student Projects</a></li>
+    <li><a href="http://localhost:8080/Kiosk/Chapel.jsp" style="color:white">Chapel Livestream</a></li>
     <li><a href="#" style="color:white">Settings</a></li>
   </ul>
 </aside>
