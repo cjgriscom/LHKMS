@@ -108,7 +108,13 @@ aside {
 <body onload="startTime()">
 
 <header>
+   
+   
+   <img id="websiteLogo" alt="LETU Logo" src="//drive.google.com/uc?id=0Bz4D-ILXJag0ZFdEUGFnTEJxS3M"/>
+   
    <h1>School of Business</h1>
+   
+   
 </header>
 <hr />
 <nav>
@@ -137,7 +143,7 @@ aside {
   </ul>
 </aside>
 
-<footer>Stock Ticker <div style="color:red" id="time"></div></footer>
+<footer>Stock Ticker <div style="color:white" id="time"></div></footer>
 
 </body>
 
