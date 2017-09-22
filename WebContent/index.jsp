@@ -143,7 +143,7 @@ aside {
 <aside>
 	<ul>
     <font size="3">
-    <a href="#" style="color:white">Main page</a>
+    <li><a href="http://localhost:8080/Kiosk/MainPage.jsp" style="color:white">Main page</a></li>
     <li><a href="http://localhost:8080/Kiosk/index.jsp" style="color:white">Slide Show 1</a></li>
     <li><a href="http://localhost:8080/Kiosk/slideshow2.jsp" style="color:white">Slide Show 2</a></li>
     <li><a href="http://localhost:8080/Kiosk/WordDoc.jsp" style="color:white">Student Projects</a></li>
