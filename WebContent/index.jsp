@@ -142,11 +142,11 @@ aside {
 
 <aside>
 	<ul>
-    <li><a href="http://localhost:8080/Kiosk/MainPage.jsp" style="color:white">Main page</a></li>
-    <li><a href="http://localhost:8080/Kiosk/index.jsp" style="color:white">Slide Show 1</a></li>
-    <li><a href="http://localhost:8080/Kiosk/slideshow2.jsp" style="color:white">Slide Show 2</a></li>
-    <li><a href="http://localhost:8080/Kiosk/WordDoc.jsp" style="color:white">Student Projects</a></li>
-    <li><a href="http://localhost:8080/Kiosk/Chapel.jsp" style="color:white">Chapel Livestream</a></li>
+    <li><a href="MainPage.jsp" style="color:white">Main page</a></li>
+    <li><a href="index.jsp" style="color:white">Slide Show 1</a></li>
+    <li><a href="slideshow2.jsp" style="color:white">Slide Show 2</a></li>
+    <li><a href="WordDoc.jsp" style="color:white">Student Projects</a></li>
+    <li><a href="Chapel.jsp" style="color:white">Chapel Livestream</a></li>
     <li><a href="#" style="color:white">Settings</a></li>
   </ul>
 </aside>
