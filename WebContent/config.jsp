@@ -278,7 +278,19 @@ if (!DatabaseLifecycle.serverConf().access().isConfigured()) {
 	<title>LVKMS Administration Page</title>
 </head>
 <body>
-<h1>Configuration Home</h1>
+<h1>Configuration Home (TODO)</h1>
+<div class="box" style="width:49%;">
+	<form id="resetForm" method="post">
+ 		<input name="request" type="hidden" value="logout"/>
+ 		
+ 		<a href="index.jsp?resetPassword=true" class="button" style="width:49%;float:left">  Reset Password  </a>
+		<a class="tinyspace">&nbsp;</a>
+		<a onClick="document.getElementById('resetForm').submit();" class="button" style="width:49%;float:left">  Logout: <%out.println(session.getAttribute("user"));%>  </a>
+		<a class="tinyspace">&nbsp;</a>
+ 	</form>
+		 
+		
+	</div>
 </body>
 
 
