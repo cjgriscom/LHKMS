@@ -1,30 +1,25 @@
 package edu.letu.lvkms;
 
 import java.io.File;
-import java.util.concurrent.ConcurrentMap;
-import java.util.function.Consumer;
 
 import org.mapdb.DB;
 import org.mapdb.DBMaker;
-import org.mapdb.Serializer;
 
-public class Database {
-	DB lvkmsDB;
+public abstract class Database<T extends Database<T>> {
+	
+	@SuppressWarnings("unchecked")
+	Accessor<T> acc = new Accessor<T>((T) this);
+	protected DB db;
 
-	public Database() {
-		lvkmsDB = DBMaker
-				.fileDB(new File(getDBDirectory(), "master.db"))
+	public Database(String name) {
+		db = DBMaker
+				.fileDB(new File(getDBDirectory(), name+".db"))
 				.fileMmapEnable()
 				.make();
 	}
 	
-	public void commit(Consumer<DB> consumer) {
-		consumer.accept(lvkmsDB);
-		lvkmsDB.commit();
-	}
-	
 	public void close() {
-		lvkmsDB.close();
+		db.close();
 	}
 
 	public static File getDBDirectory() {
@@ -33,5 +28,9 @@ public class Database {
 			dirs.mkdirs();
 		}
 		return dirs;
+	}
+	
+	public Accessor<T> accessor() {
+		return acc;
 	}
 }
