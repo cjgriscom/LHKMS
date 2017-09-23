@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -142,7 +142,6 @@ aside {
 
 <aside>
 	<ul>
-    <font size="3">
     <li><a href="http://localhost:8080/Kiosk/MainPage.jsp" style="color:white">Main page</a></li>
     <li><a href="http://localhost:8080/Kiosk/index.jsp" style="color:white">Slide Show 1</a></li>
     <li><a href="http://localhost:8080/Kiosk/slideshow2.jsp" style="color:white">Slide Show 2</a></li>
