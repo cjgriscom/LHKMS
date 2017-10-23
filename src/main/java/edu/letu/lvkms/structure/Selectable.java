@@ -1,5 +1,7 @@
 package edu.letu.lvkms.structure;
 
-public interface Selectable {
+import java.io.Serializable;
+
+public interface Selectable extends Serializable {
 	
 }
