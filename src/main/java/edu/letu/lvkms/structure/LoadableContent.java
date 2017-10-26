@@ -28,6 +28,12 @@ public class LoadableContent implements Selectable, Serializable, JSONSerializab
 		return contentID;
 	}
 
+	// Used in menu serialization
+	@Override
+	public String jsonTypeID() {
+		return "content";
+	}
+
 	@Override
 	public JSONObject serialize() {
 		JSONObject ser = new JSONObject();
