@@ -57,7 +57,7 @@ public class View implements Serializable, JSONSerializable {
 	@Override
 	public JSONObject serialize() {
 		JSONObject ser = new JSONObject();
-		ser.put("viewID", getViewID());
+		ser.put("viewID", getViewID().toString());
 		ser.put("name", getName());
 		ser.put("buttonBox", getButtonBox().serialize());
 		ser.put("statusBar", getStatusBar().serialize());
