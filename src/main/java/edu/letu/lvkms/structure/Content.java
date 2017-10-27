@@ -1,10 +1,26 @@
 package edu.letu.lvkms.structure;
 
 import java.io.Serializable;
-import java.util.TreeMap;
+import java.util.Collection;
+import java.util.TreeSet;
 import java.util.UUID;
 
-public class Content implements Serializable {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/**
+ * JSON Format
+ * {
+ * "contentID": string
+ * "users": [string, ...]    (list of viewIDs that use this content)
+ * "name": string
+ * "type": string            (Slides, Doc, YouTube, PDF)
+ * "contentData": string     (usually URL of content)
+ * 
+ * }
+ *
+ */
+public class Content implements Serializable, JSONSerializable {
 	
 	private static final long serialVersionUID = -5406518350967038592L;
 	
@@ -18,7 +34,7 @@ public class Content implements Serializable {
 	 * Used to keep a running list of all the views that 
 	 * use this Content.  
 	 */
-	private final TreeMap<UUID, View> users;
+	private final TreeSet<UUID> users; // Set of viewIDs that use this Content 
 	
 	private final Type type;
 	
@@ -31,7 +47,7 @@ public class Content implements Serializable {
 		this.name = name;
 		this.type = type;
 		this.contentData = contentData;
-		users = new TreeMap<>();
+		users = new TreeSet<>();
 	}
 	
 	public UUID getContentID() {
@@ -54,12 +70,42 @@ public class Content implements Serializable {
 		this.contentData = contentData;
 	}
 	
+	public Collection<UUID> getUsers() {
+		return users;
+	}
+	
 	public Type getType() {
 		return type;
 	}
 	
 	public boolean isUnused() {
 		return users.isEmpty();
+	}
+
+/**
+ * JSON Format
+ * {
+ * "contentID": string
+ * "users": [string, ...]    (list of viewIDs that use this content)
+ * "name": string
+ * "type": string            (Slides, Doc, YouTube, PDF)
+ * "contentData": string     (usually URL of content)
+ * 
+ * }
+ *
+ */
+	@Override
+	public JSONObject serialize() {
+		JSONObject ser = new JSONObject();
+		JSONArray users = new JSONArray();
+		for (UUID user : getUsers()) users.put(user.toString());
+		ser.put("contentID", getContentID().toString());
+		ser.put("users", users);
+		ser.put("name", getName());
+		ser.put("type", getType().name());
+		ser.put("contentData", getContentData());
+		
+		return ser;
 	}
 	
 }

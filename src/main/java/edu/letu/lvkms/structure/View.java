@@ -1,11 +1,21 @@
 package edu.letu.lvkms.structure;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-public class View implements Serializable {
+import org.json.JSONObject;
+
+/**
+ * JSON Format:
+ * 
+ * {
+ * "viewID": string
+ * "name": string
+ * "buttonBox": {Menu}
+ * "statusBar": {StatusBar}
+ * }
+ */
+public class View implements Serializable, JSONSerializable {
 	
 	private static final long serialVersionUID = 5841199622853631198L;
 	
@@ -13,14 +23,14 @@ public class View implements Serializable {
 	
 	private String name;
 	
-	private final ArrayList<Selectable> buttonBox;
+	private final Menu buttonBox;
 	
 	private final StatusBar statusBar;
 	
 	public View(String name) {
 		this.name = name;
 		this.viewID = UUID.randomUUID();
-		this.buttonBox = new ArrayList<>();
+		this.buttonBox = new Menu();
 		this.statusBar = new StatusBar();
 	}
 	
@@ -36,12 +46,22 @@ public class View implements Serializable {
 		this.name = name;
 	}
 	
-	public List<Selectable> getButtonBox() {
+	public Menu getButtonBox() {
 		return buttonBox;
 	}
 	
-	public StatusBar statusBar() {
+	public StatusBar getStatusBar() {
 		return statusBar;
 	}
 	
+	@Override
+	public JSONObject serialize() {
+		JSONObject ser = new JSONObject();
+		ser.put("viewID", getViewID().toString());
+		ser.put("name", getName());
+		ser.put("buttonBox", getButtonBox().serialize());
+		ser.put("statusBar", getStatusBar().serialize());
+		
+		return ser;
+	}
 }

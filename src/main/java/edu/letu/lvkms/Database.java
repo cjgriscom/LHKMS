@@ -12,10 +12,12 @@ public abstract class Database<T extends Database<T>> {
 	protected DB db;
 
 	public Database(String name) {
+		System.out.println("Loading database...");
 		db = DBMaker
 				.fileDB(new File(getDBDirectory(), name+".db"))
 				.fileMmapEnable()
 				.make();
+		System.out.println("Loaded database.");
 	}
 	
 	public void close() {

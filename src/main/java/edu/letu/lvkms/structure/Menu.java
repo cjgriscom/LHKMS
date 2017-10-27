@@ -6,7 +6,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-public class Menu implements Selectable, Serializable {
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+/**
+ * JSON Format
+ * {
+ * "entries": [
+ *   {
+ *     "type":string     ("menu" or "content")
+ *     "title":string
+ *     "selectable":{Menu} or {LoadableContent} 
+ *   },
+ * ...]
+ * 
+ * }
+ */
+public class Menu implements Selectable, Serializable, JSONSerializable {
 	
 	private static final long serialVersionUID = -6483672860914849698L;
 	
@@ -60,5 +76,26 @@ public class Menu implements Selectable, Serializable {
 	
 	public int size() {
 		return entries.size();
+	}
+
+	// Used in menu serialization
+	@Override
+	public String jsonTypeID() {
+		return "menu";
+	}
+
+	@Override
+	public JSONObject serialize() {
+		JSONObject ser = new JSONObject();
+		JSONArray entries = new JSONArray();
+		for (Entry<String, Selectable> e : entryList()) {
+			JSONObject entry = new JSONObject();
+			entry.put("type", e.getValue().jsonTypeID());
+			entry.put("title", e.getKey());
+			entry.put("selectable", e.getValue().serialize());
+			entries.put(entry);
+		}
+		ser.put("entries", entries);
+		return ser;
 	}
 }

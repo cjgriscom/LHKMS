@@ -4,7 +4,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatusBar implements Serializable {
+import org.json.JSONObject;
+
+/**
+ * JSON Format:
+ * 
+ * {
+ * "weather": boolean
+ * "time": boolean
+ * "marquee": boolean
+ * "marqueeText": string         (optional)
+ * "stocks": boolean
+ * "stockList": [string, ...]      (optional)
+ * 
+ * }
+ *
+ */
+public class StatusBar implements Serializable, JSONSerializable {
 	
 	private static final long serialVersionUID = 3700830180680986009L;
 	
@@ -31,7 +47,7 @@ public class StatusBar implements Serializable {
 		this.time = time;
 	}
 	
-	public boolean getTime() {
+	public boolean hasTime() {
 		return time;
 	}
 	
@@ -57,5 +73,18 @@ public class StatusBar implements Serializable {
 	
 	public String getMarqueeText() {
 		return marqueeText;
+	}
+
+	@Override
+	public JSONObject serialize() {
+		JSONObject ser = new JSONObject();
+		ser.put("weather", hasWeather());
+		ser.put("time", hasTime());
+		ser.put("marquee", hasMarquee());
+		ser.put("stocks", hasStocks());
+		if (hasMarquee()) ser.put("marqueeText", getMarqueeText());
+		if (hasStocks()) ser.put("stockList", stocks);
+		
+		return ser;
 	}
 }
