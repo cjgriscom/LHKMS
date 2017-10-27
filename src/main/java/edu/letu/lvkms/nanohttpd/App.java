@@ -1,6 +1,5 @@
 package edu.letu.lvkms.nanohttpd;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -43,7 +42,7 @@ public class App extends NanoHTTPD {
 			if (res != null) {
 				try {
 					InputStream is = res.openStream();
-					return newChunkedResponse(Status.OK, MIME_HTML, is);
+					return newChunkedResponse(Status.OK, MIME_TYPES.get(session.getUri().substring(session.getUri().lastIndexOf('.'))), is);
 				} catch (IOException e) {
 					e.printStackTrace();
 					return get404();
