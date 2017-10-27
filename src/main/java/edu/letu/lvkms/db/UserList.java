@@ -1,5 +1,7 @@
 package edu.letu.lvkms.db;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.mapdb.BTreeMap;
@@ -7,8 +9,9 @@ import org.mapdb.Serializer;
 
 import edu.letu.lvkms.Database;
 import edu.letu.lvkms.Util;
+import fi.iki.elonen.NanoHTTPD.Response;
 
-public class UserList extends Database<UserList> {
+public class UserList extends Database<UserList> implements JSONContentHandler {
 
 	public UserList() {
 		super("userList");
@@ -211,5 +214,11 @@ public class UserList extends Database<UserList> {
 	 */
 	public AccessLevel getAccessLevel(String username) {
 		return AccessLevel.valueOf(accessLevels.get(username));
+	}
+
+	@Override
+	public Response handleJSONRequest(Map<String, List<String>> args) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
