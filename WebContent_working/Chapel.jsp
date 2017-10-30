@@ -34,7 +34,7 @@ function checkTime(i) {
 <style type="text/css">
 
 body {
-	background-color: #3063b5;
+	background-image: url("background.png");
 } 
 
 header, footer {
@@ -126,16 +126,53 @@ aside {
 </nav>
 
 <div id="wrapper">
-    <div id="content" class="tab_container">
-        <div style="width:100%;height:95%;overflow:hidden;" >
-        <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vT_1_s-Z_CnqPai8YSvZStxwz0gEsyUwxZGb3QFxJN7njyOR594cQcZTulQuJKKvrSkh0eYvVO5vZpE/embed?start=true&loop=true&delayms=3000"
-         frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-        <!--<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRYaSEFJhJibDZ__KUn0Rn_VttvgEge9RpZ-XC753ZOgihALxtL5o3UonkD10-Qs2v0oPy-KfWgt--T/embed?start=true&loop=true&delayms=3000" 
-          id="content_slides" class="iframe_container"
-          frameborder="0" width="100%" height="100%" 
-          allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>-->
-        </div>
-    </div>
+    <!-- TradingView Widget BEGIN -->
+<div id="tv-medium-widget-3b2bf"></div>
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script type="text/javascript">
+new TradingView.MediumWidget({
+  "container_id": "tv-medium-widget-3b2bf",
+  "symbols": [
+    [
+      "Apple",
+      "AAPL "
+    ],
+    [
+      "Google",
+      "GOOGL"
+    ],
+    [
+      "Microsoft",
+      "MSFT"
+    ],
+    [
+      "GOLD",
+      "TVC:GOLD|max"
+    ],
+    [
+      "SILVER",
+      "TVC:SILVER|max"
+    ],
+    [
+      "S&P 500",
+      "INDEX:SPX|max"
+    ],
+    [
+      "DJI",
+      "DJ:DJI|max"
+    ]
+  ],
+  "greyText": "Quotes by",
+  "gridLineColor": "#e9e9ea",
+  "fontColor": "#83888D",
+  "underLineColor": "#dbeffb",
+  "trendLineColor": "#4bafe9",
+  "width": "100%",
+  "height": "100%",
+  "locale": "en"
+});
+</script>
+<!-- TradingView Widget END -->
 </div>
 
 
@@ -157,9 +194,84 @@ aside {
 </body>
 
 
+<!-- TradingView Widget BEGIN -->
+	<span id="tradingview-copyright"><a ref="nofollow noopener" target="_blank" href="http://www.tradingview.com" style="color: rgb(173, 174, 176); font-family: &quot;Trebuchet MS&quot;, Tahoma, Arial, sans-serif; font-size: 13px;">Quotes by 
+	<span style="color: #3BB3E4">TradingView</span></a></span>
+	<script src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js">{
+  "symbols": 
+    {
+      "proName": "INDEX:SPX",
+      "title": "S&P 500"
+    },
+    {
+      "proName": "INDEX:IUXX",
+      "title": "Nasdaq 100"
+    },
+    {
+      "proName": "FX_IDC:EURUSD",
+      "title": "EUR/USD"
+    },
+    {
+      "proName": "NYMEX:CL1!",
+      "title": "Crude Oil"
+    },
+    {
+      "proName": "FX_IDC:XAUUSD",
+      "title": "Gold"
+    }
+  ],
+  "locale": "en"
+}</script>
+<!-- TradingView Widget END -->
 
 
-
+<!-- TradingView Widget BEGIN -->
+<div id="tv-medium-widget-3b2bf"></div>
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script type="text/javascript">
+new TradingView.MediumWidget({
+  "container_id": "tv-medium-widget-3b2bf",
+  "symbols": [
+    [
+      "Apple",
+      "AAPL "
+    ],
+    [
+      "Google",
+      "GOOGL"
+    ],
+    [
+      "Microsoft",
+      "MSFT"
+    ],
+    [
+      "GOLD",
+      "TVC:GOLD|max"
+    ],
+    [
+      "SILVER",
+      "TVC:SILVER|max"
+    ],
+    [
+      "S&P 500",
+      "INDEX:SPX|max"
+    ],
+    [
+      "DJI",
+      "DJ:DJI|max"
+    ]
+  ],
+  "greyText": "Quotes by",
+  "gridLineColor": "#e9e9ea",
+  "fontColor": "#83888D",
+  "underLineColor": "#dbeffb",
+  "trendLineColor": "#4bafe9",
+  "width": "100%",
+  "height": "100%",
+  "locale": "en"
+});
+</script>
+<!-- TradingView Widget END -->
 
 
 
