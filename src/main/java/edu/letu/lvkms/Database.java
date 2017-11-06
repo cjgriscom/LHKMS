@@ -16,6 +16,7 @@ public abstract class Database<T extends Database<T>> {
 		db = DBMaker
 				.fileDB(new File(getDBDirectory(), name+".db"))
 				.fileMmapEnable()
+				.checksumHeaderBypass()
 				.make();
 		System.out.println("Loaded database.");
 	}
