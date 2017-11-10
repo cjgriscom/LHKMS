@@ -50,6 +50,15 @@ public class Content implements Serializable, JSONSerializable {
 		users = new TreeSet<>();
 	}
 	
+	public Content(JSONObject ser) {
+		contentID = UUID.fromString(ser.getString("contentID"));
+		name = ser.getString("name");
+		type = Type.valueOf(ser.getString("type"));
+		contentData = ser.getString("contentData");
+		users = new TreeSet<>();
+		ser.getJSONArray("users").forEach((o) -> users.add(UUID.fromString(o.toString())));
+	}
+
 	public UUID getContentID() {
 		return contentID;
 	}
@@ -81,19 +90,7 @@ public class Content implements Serializable, JSONSerializable {
 	public boolean isUnused() {
 		return users.isEmpty();
 	}
-
-/**
- * JSON Format
- * {
- * "contentID": string
- * "users": [string, ...]    (list of viewIDs that use this content)
- * "name": string
- * "type": string            (Slides, Doc, YouTube, PDF)
- * "contentData": string     (usually URL of content)
- * 
- * }
- *
- */
+	
 	@Override
 	public JSONObject serialize() {
 		JSONObject ser = new JSONObject();

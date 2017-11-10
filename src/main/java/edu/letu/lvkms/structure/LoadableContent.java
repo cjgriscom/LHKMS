@@ -24,6 +24,10 @@ public class LoadableContent implements Selectable, Serializable, JSONSerializab
 		this.contentID = contentID;
 	}
 	
+	public LoadableContent(JSONObject ser) {
+		this.contentID = UUID.fromString(ser.getString("contentID"));
+	}
+	
 	public UUID getContentID() {
 		return contentID;
 	}

@@ -34,6 +34,13 @@ public class View implements Serializable, JSONSerializable {
 		this.statusBar = new StatusBar();
 	}
 	
+	public View(JSONObject ser) {
+		this.name = ser.getString("name");
+		this.viewID = UUID.fromString(ser.getString("viewID"));
+		this.buttonBox = new Menu();
+		this.statusBar = new StatusBar();
+	}
+	
 	public UUID getViewID() {
 		return viewID;
 	}

@@ -32,6 +32,21 @@ public class Menu implements Selectable, Serializable, JSONSerializable {
 		this.entries = new ArrayList<>();
 	}
 	
+	public Menu(JSONObject ser) {
+		this.entries = new ArrayList<>();
+		ser.getJSONArray("entries").forEach((o) -> {
+			JSONObject j = (JSONObject) o;
+			String type = j.getString("type");
+			String title = j.getString("title");
+			JSONObject selectableJSON = j.getJSONObject("selectable");
+			Selectable s = null;
+			if (type.equals("menu")) s = new Menu(selectableJSON);
+			else if (type.equals("content")) s = new LoadableContent(selectableJSON);
+			if (s == null) throw new IllegalArgumentException("Type field "+type+" not recognized in Menu entry");
+			entries.add(new SimpleEntry<>(title, s));
+		});
+	}
+	
 	public void addEntry(String title, Selectable s) {
 		this.entries.add(new SimpleEntry<>(title, s));
 	}

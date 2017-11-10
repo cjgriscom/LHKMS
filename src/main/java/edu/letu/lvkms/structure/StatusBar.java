@@ -35,6 +35,18 @@ public class StatusBar implements Serializable, JSONSerializable {
 		this.stocks = new ArrayList<>();
 	}
 	
+	public StatusBar(JSONObject ser) {
+		this.stocks = new ArrayList<>();
+		this.weather = ser.getBoolean("weather");
+		this.time = ser.getBoolean("time");
+		if (ser.getBoolean("marquee")) this.marqueeText = ser.getString("marqueeText");
+		if (ser.getBoolean("stocks")) {
+			ser.getJSONArray("stockList").forEach((o) -> {
+				this.stocks.add(o.toString());
+			});
+		}
+	}
+	
 	public void setWeather(boolean weather) {
 		this.weather = weather;
 	}
