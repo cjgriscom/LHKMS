@@ -1,26 +1,30 @@
 package edu.letu.lvkms.javafx;
 
+import static edu.letu.lvkms.javafx.FXUtil.actionButton;
+import static edu.letu.lvkms.javafx.FXUtil.background;
+import static edu.letu.lvkms.javafx.FXUtil.labeledVField;
+import static edu.letu.lvkms.javafx.FXUtil.padded;
+import static edu.letu.lvkms.javafx.FXUtil.showAlert;
+
+import org.controlsfx.control.BreadCrumbBar;
+
 import javafx.application.Application;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.control.TreeItem;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -35,6 +39,15 @@ public class ClientApp extends Application {
 	
 	private final Button login = actionButton(new Button("Log In"), this::processLogin);
 	private final Button quit = actionButton(new Button("Quit"), this::processQuit);
+
+	private final TreeItem<String> root = new TreeItem<String>("Home");
+	private final TreeItem<String> contentTree = new TreeItem<String>("Content");
+	private final TreeItem<String> viewTree = new TreeItem<String>("Views");
+	private final TreeItem<String> screenTree = new TreeItem<String>("Screens");
+	private final BreadCrumbBar<String> breadcrumb = new BreadCrumbBar<>(root);
+	private final StackPane container = new StackPane();
+	
+	private final HomePage homePage = new HomePage(this, container);
 	
 	private Stage stage;
 	
@@ -57,7 +70,24 @@ public class ClientApp extends Application {
 				barButton(quit)
 				));
 		
-		prim.getChildren().addAll(connectionBar);
+		prim.getChildren().addAll(
+				connectionBar, 
+				background(padded(breadcrumb,5), Color.WHITESMOKE),
+				background(padded(container),Color.LIGHTGRAY));
+		
+		breadcrumb.selectedCrumbProperty().addListener((e,o,n) -> {
+			container.getChildren().clear();
+			container.getChildren().add(getFrameFromTreeItem(n));
+		});
+		
+		rebuildTree();
+		breadcrumb.setSelectedCrumb(root);
+		container.getChildren().clear();
+		container.getChildren().add(getFrameFromTreeItem(root));
+		
+		VBox.setVgrow(container, Priority.ALWAYS);
+		container.prefWidthProperty().bind(stage.widthProperty());
+		container.maxWidthProperty().bind(stage.widthProperty());
 		
 		Scene scene = new Scene(prim);
 		stage.titleProperty().bind(titleBar);
@@ -68,18 +98,37 @@ public class ClientApp extends Application {
 		stage.show();
 	}
 	
-	public FlowPane flowBar(ReadOnlyDoubleProperty widthBinding, Node... children) {
-		FlowPane bar = padded(new FlowPane());
-		bar.setAlignment(Pos.CENTER);
-		bar.setBackground(new Background(new BackgroundFill(Color.GRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-		bar.prefWidthProperty().bind(widthBinding);
-		
-		bar.getChildren().addAll(children);
-		
-		return bar;
+	
+	private Node getFrameFromTreeItem(TreeItem<String> item) {
+		System.out.println(item);
+		if (item == root) {
+			return homePage;
+		} else if (item.getParent() == root) {
+			if (item == contentTree) {
+				return new Label("C");
+			} else if (item == viewTree) {
+				return new Label("V");
+				
+			} else if (item == screenTree) {
+				return new Label("S");
+				
+			}
+		}
+		return new Region();
+		 
 	}
-	
-	
+
+	// Data Management
+	@SuppressWarnings("unchecked")
+	public void rebuildTree() {
+		root.getChildren().clear();
+		
+		TreeItem<String> screen1 = new TreeItem<String>("Screen 1");
+		TreeItem<String> screen2 = new TreeItem<String>("Screen 2");
+		screenTree.getChildren().addAll(screen1, screen2);
+
+		root.getChildren().addAll(contentTree, viewTree, screenTree);
+	}
 	
 	// Event Handlers
 	
@@ -91,6 +140,16 @@ public class ClientApp extends Application {
 		stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
 	
+	public void handleEditContent(ActionEvent e) {
+		breadcrumb.setSelectedCrumb(contentTree);
+	}
+	public void handleEditViews(ActionEvent e) {
+		breadcrumb.setSelectedCrumb(viewTree);
+	}
+	public void handleEditScreens(ActionEvent e) {
+		breadcrumb.setSelectedCrumb(screenTree);
+	}
+	
 	
 	
 	
@@ -98,47 +157,22 @@ public class ClientApp extends Application {
 	
 	
 	// FX Utilities
-	public void showAlert(String title, String header, String body) {
-		Alert alert = new Alert(AlertType.INFORMATION);
-		if (title != null) alert.setTitle(title);
-		if (header != null) alert.setHeaderText(header);
-		if (body != null) alert.setContentText(body);
-
-		alert.showAndWait();
+	public FlowPane flowBar(ReadOnlyDoubleProperty widthBinding, Node... children) {
+		FlowPane bar = padded(new FlowPane());
+		bar.setAlignment(Pos.CENTER);
+		bar = background(bar, Color.LIGHTGRAY);
+		bar.prefWidthProperty().bind(widthBinding);
+		
+		bar.getChildren().addAll(children);
+		
+		return bar;
 	}
 	
-	public Button actionButton(Button b, EventHandler<ActionEvent> handler) {
-		b.setOnAction(handler);
-		return b;
-	}
-	
-	public Region spacer() {
-		Region sp = new Region();
-		sp.setPrefWidth(5);
-		sp.setPrefHeight(5);
-		return sp;
-	}
-	
-	public Node barButton(Button b) {
+	public Region barButton(Button b) {
 		b.setPrefWidth(100);
 		VBox box = padded(new VBox(b));
 		b.setAlignment(Pos.BOTTOM_CENTER);
 		box.setAlignment(Pos.BOTTOM_CENTER);
 		return box;
-	}
-	
-	public Button defaultWidths(Button b) {
-		b.setPrefWidth(200);
-		b.setAlignment(Pos.BOTTOM_CENTER);
-		return b;
-	}
-	
-	public <T extends Region> T padded(T r) {
-		r.setPadding(new Insets(3));
-		return r;
-	}
-	
-	public VBox labeledVField(String label, TextField field) {
-		return padded(new VBox(new Label(label), field));
 	}
 }
