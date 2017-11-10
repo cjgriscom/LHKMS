@@ -41,8 +41,14 @@ public class App extends NanoHTTPD {
 			URL res = this.getClass().getResource("/WebContent"+session.getUri());
 			if (res != null) {
 				try {
-					InputStream is = res.openStream();
-					return newChunkedResponse(Status.OK, MIME_TYPES.get(session.getUri().substring(session.getUri().lastIndexOf('.'))), is);
+					if (session.getUri().contains(".")) {
+						InputStream is = res.openStream();
+						return newChunkedResponse(Status.OK, mimeTypes().get(session.getUri().substring(session.getUri().lastIndexOf('.'))), is);
+					} else {
+
+						return get404();
+					}
+					
 				} catch (IOException e) {
 					e.printStackTrace();
 					return get404();
