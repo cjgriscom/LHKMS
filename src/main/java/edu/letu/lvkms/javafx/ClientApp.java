@@ -38,6 +38,11 @@ import javafx.stage.WindowEvent;
 public class ClientApp extends Application {
 	
 	final ObjectProperty<CompleteDatabasePipeline> db = new SimpleObjectProperty<>();
+	
+	
+	
+	
+	
 	private final StringProperty mainTitle = 
 			new SimpleStringProperty("Longview Hall Kiosk Management System");
 	
@@ -72,6 +77,11 @@ public class ClientApp extends Application {
 	public void start(Stage stage) throws Exception {
 		this.stage = stage;
 		VBox prim = new VBox();
+		
+		// TODO ADD LOGINS
+		username.disableProperty().set(true);
+		password.disableProperty().set(true);
+		//
 		
 		HBox connectionBar = new HBox();
 		

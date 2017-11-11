@@ -2,12 +2,11 @@ package edu.letu.lvkms.structure;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import edu.letu.lvkms.db.ViewList;
+import edu.letu.lvkms.db.FlatJSON;
 
 /**
  * JSON Format
@@ -24,8 +23,12 @@ public class CompleteDatabasePipeline implements JSONSerializable {
 	private final ArrayList<View> views = new ArrayList<>();
 	//private final ArrayList<Screen> screen = new ArrayList<>(); //TODO
 	
-	public CompleteDatabasePipeline(ViewList vl, ViewList vl2) { // Construct from Server DB
-		// TODO
+	public CompleteDatabasePipeline() {
+		// Blank const
+	}
+	
+	public CompleteDatabasePipeline(FlatJSON vl) { // Construct from Server DB
+		this(new JSONObject(vl.data()));
 	}
 	
 	public CompleteDatabasePipeline(JSONObject ser) { // Construct from JSON
