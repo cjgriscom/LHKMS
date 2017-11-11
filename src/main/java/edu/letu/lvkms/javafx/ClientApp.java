@@ -9,6 +9,8 @@ import static edu.letu.lvkms.javafx.FXUtil.showAlert;
 import org.controlsfx.control.BreadCrumbBar;
 
 import javafx.application.Application;
+import javafx.beans.binding.StringExpression;
+import javafx.beans.binding.When;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -17,7 +19,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.layout.FlowPane;
@@ -32,6 +33,9 @@ import javafx.stage.WindowEvent;
 
 public class ClientApp extends Application {
 	
+	private final StringProperty mainTitle = 
+			new SimpleStringProperty("Longview Hall Kiosk Management System");
+	
 	private final StringProperty titleBar = new SimpleStringProperty();
 	private final TextField address = new TextField();
 	private final TextField username = new TextField();
@@ -40,14 +44,14 @@ public class ClientApp extends Application {
 	private final Button login = actionButton(new Button("Log In"), this::processLogin);
 	private final Button quit = actionButton(new Button("Quit"), this::processQuit);
 
-	private final TreeItem<String> root = new TreeItem<String>("Home");
-	private final TreeItem<String> contentTree = new TreeItem<String>("Content");
-	private final TreeItem<String> viewTree = new TreeItem<String>("Views");
-	private final TreeItem<String> screenTree = new TreeItem<String>("Screens");
-	private final BreadCrumbBar<String> breadcrumb = new BreadCrumbBar<>(root);
+	private final BreadCrumbBar<ContainerChild> breadcrumb = new BreadCrumbBar<>();
 	private final StackPane container = new StackPane();
 	
-	private final HomePage homePage = new HomePage(this, container);
+	private final TreeItem<ContainerChild> home = 
+			buildTreeItem(new HomePage(this, container));
+	private final TreeItem<ContainerChild> contentEditor = 
+			buildTreeItem(new ContentEditor(this, container));
+
 	
 	private Stage stage;
 	
@@ -77,13 +81,9 @@ public class ClientApp extends Application {
 		
 		breadcrumb.selectedCrumbProperty().addListener((e,o,n) -> {
 			container.getChildren().clear();
-			container.getChildren().add(getFrameFromTreeItem(n));
+			container.getChildren().add(n.getValue());
 		});
 		
-		rebuildTree();
-		breadcrumb.setSelectedCrumb(root);
-		container.getChildren().clear();
-		container.getChildren().add(getFrameFromTreeItem(root));
 		
 		VBox.setVgrow(container, Priority.ALWAYS);
 		container.prefWidthProperty().bind(stage.widthProperty());
@@ -94,40 +94,23 @@ public class ClientApp extends Application {
 		stage.setScene(scene);
 		stage.setWidth(800);
 		stage.setHeight(600);
-		titleBar.set("Longview Hall Kiosk Management System");
+		setSubtitle(null);
 		stage.show();
+		
+		// !Begin!
+		rebuildTree();
 	}
 	
-	
-	private Node getFrameFromTreeItem(TreeItem<String> item) {
-		System.out.println(item);
-		if (item == root) {
-			return homePage;
-		} else if (item.getParent() == root) {
-			if (item == contentTree) {
-				return new Label("C");
-			} else if (item == viewTree) {
-				return new Label("V");
-				
-			} else if (item == screenTree) {
-				return new Label("S");
-				
-			}
-		}
-		return new Region();
-		 
-	}
 
 	// Data Management
 	@SuppressWarnings("unchecked")
 	public void rebuildTree() {
-		root.getChildren().clear();
+		breadcrumb.setSelectedCrumb(home);
 		
-		TreeItem<String> screen1 = new TreeItem<String>("Screen 1");
-		TreeItem<String> screen2 = new TreeItem<String>("Screen 2");
-		screenTree.getChildren().addAll(screen1, screen2);
+		home.getChildren().clear();
+		contentEditor.getChildren().clear();
 
-		root.getChildren().addAll(contentTree, viewTree, screenTree);
+		home.getChildren().addAll(contentEditor);
 	}
 	
 	// Event Handlers
@@ -141,7 +124,7 @@ public class ClientApp extends Application {
 	}
 	
 	public void handleEditContent(ActionEvent e) {
-		breadcrumb.setSelectedCrumb(contentTree);
+		breadcrumb.setSelectedCrumb(contentEditor);
 	}
 	public void handleEditViews(ActionEvent e) {
 		breadcrumb.setSelectedCrumb(viewTree);
@@ -152,11 +135,28 @@ public class ClientApp extends Application {
 	
 	
 	
-	
+	// Child Helper Methods
+	public void setSubtitle(StringExpression sub) {
+		this.titleBar.unbind();
+		if (sub == null) {
+			titleBar.bind(mainTitle);
+		} else {
+			titleBar.bind(
+					mainTitle
+					.concat(new When(sub.isEmpty()).then(" ").otherwise(" - "))
+					.concat(sub)
+					);
+		}
+	}
 	
 	
 	
 	// FX Utilities
+	public final TreeItem<ContainerChild> buildTreeItem(ContainerChild ci) {
+		TreeItem<ContainerChild> ti = new TreeItem<>(ci);
+		return ti;
+	}
+	
 	public FlowPane flowBar(ReadOnlyDoubleProperty widthBinding, Node... children) {
 		FlowPane bar = padded(new FlowPane());
 		bar.setAlignment(Pos.CENTER);

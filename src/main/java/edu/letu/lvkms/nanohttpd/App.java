@@ -8,6 +8,7 @@ import java.util.Map;
 
 import edu.letu.lvkms.db.UserList;
 import edu.letu.lvkms.db.ViewList;
+import edu.letu.lvkms.structure.CompleteDatabasePipeline;
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.Response.Status;
 
@@ -37,6 +38,7 @@ public class App extends NanoHTTPD {
 		System.out.println(session.getUri());
 		switch(session.getUri()) {
 		case "/test": return newFixedLengthResponse("test success");
+		case "getDatabase": return newFixedLengthResponse(new CompleteDatabasePipeline(viewList, viewList).serialize().toString());
 		default: {
 			URL res = this.getClass().getResource("/WebContent"+session.getUri());
 			if (res != null) {
@@ -45,7 +47,7 @@ public class App extends NanoHTTPD {
 						InputStream is = res.openStream();
 						return newChunkedResponse(Status.OK, mimeTypes().get(session.getUri().substring(session.getUri().lastIndexOf('.'))), is);
 					} else {
-
+						
 						return get404();
 					}
 					
@@ -60,7 +62,7 @@ public class App extends NanoHTTPD {
 		}
 		
 	}
-	
+
 	public Response get404() {
 		return newFixedLengthResponse(Status.NOT_FOUND, MIME_PLAINTEXT, "Page not found.");
 	}
