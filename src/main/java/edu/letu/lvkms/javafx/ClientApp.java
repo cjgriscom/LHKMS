@@ -24,6 +24,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
+import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -103,6 +104,7 @@ public class ClientApp extends Application {
 		stage.setScene(scene);
 		stage.setWidth(800);
 		stage.setHeight(600);
+		stage.getIcons().add(new Image(getClass().getResourceAsStream("/icon.png")));
 		setSubtitle(null);
 		stage.show();
 		
