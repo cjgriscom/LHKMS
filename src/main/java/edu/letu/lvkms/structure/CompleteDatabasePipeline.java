@@ -1,9 +1,13 @@
 package edu.letu.lvkms.structure;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import edu.letu.lvkms.db.ViewList;
 
 /**
  * JSON Format
@@ -20,7 +24,7 @@ public class CompleteDatabasePipeline implements JSONSerializable {
 	private final ArrayList<View> views = new ArrayList<>();
 	//private final ArrayList<Screen> screen = new ArrayList<>(); //TODO
 	
-	public CompleteDatabasePipeline(/*?*/) { // Construct from Server DB
+	public CompleteDatabasePipeline(ViewList vl, ViewList vl2) { // Construct from Server DB
 		// TODO
 	}
 	
@@ -56,4 +60,30 @@ public class CompleteDatabasePipeline implements JSONSerializable {
 		return ser;
 	}
 
+	public List<Content> contentList() {
+		return content;
+	}
+
+	public List<View> viewList() {
+		return views;
+	}
+	
+	public boolean canMoveUp(List<?> list, int entryNum) {
+		return entryNum > 0;
+	}
+	
+	public boolean canMoveDown(List<?> list, int entryNum) {
+		return entryNum < list.size() - 1;
+	}
+	
+	public <T> void moveUp(List<T> list, int entryNum) {
+		if (!canMoveUp(list, entryNum)) throw new IllegalArgumentException("Cannot move entry upwards");
+		list.add(entryNum-1, list.remove(entryNum));
+	}
+	
+	public <T> void modeDown(List<T> list, int entryNum) {
+		if (!canMoveDown(list, entryNum)) throw new IllegalArgumentException("Cannot move entry upwards");
+		list.add(entryNum+1, list.remove(entryNum));
+	}
+	
 }
