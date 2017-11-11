@@ -8,10 +8,13 @@ import static edu.letu.lvkms.javafx.FXUtil.showAlert;
 
 import org.controlsfx.control.BreadCrumbBar;
 
+import edu.letu.lvkms.structure.CompleteDatabasePipeline;
 import javafx.application.Application;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.binding.When;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
@@ -33,6 +36,7 @@ import javafx.stage.WindowEvent;
 
 public class ClientApp extends Application {
 	
+	final ObjectProperty<CompleteDatabasePipeline> db = new SimpleObjectProperty<>();
 	private final StringProperty mainTitle = 
 			new SimpleStringProperty("Longview Hall Kiosk Management System");
 	
@@ -51,6 +55,10 @@ public class ClientApp extends Application {
 			buildTreeItem(new HomePage(this, container));
 	private final TreeItem<ContainerChild> contentEditor = 
 			buildTreeItem(new ContentEditor(this, container));
+	private final TreeItem<ContainerChild> viewsEditor = 
+			buildTreeItem(new ViewsEditor(this, container));
+	private final TreeItem<ContainerChild> screensEditor = 
+			buildTreeItem(new ScreensEditor(this, container));
 
 	
 	private Stage stage;
@@ -82,6 +90,7 @@ public class ClientApp extends Application {
 		breadcrumb.selectedCrumbProperty().addListener((e,o,n) -> {
 			container.getChildren().clear();
 			container.getChildren().add(n.getValue());
+			setSubtitle(n.getValue().subTitle());
 		});
 		
 		
@@ -99,18 +108,22 @@ public class ClientApp extends Application {
 		
 		// !Begin!
 		rebuildTree();
+		breadcrumb.setSelectedCrumb(home);
 	}
 	
 
 	// Data Management
 	@SuppressWarnings("unchecked")
 	public void rebuildTree() {
-		breadcrumb.setSelectedCrumb(home);
 		
 		home.getChildren().clear();
 		contentEditor.getChildren().clear();
+		viewsEditor.getChildren().clear();
+		screensEditor.getChildren().clear();
 
-		home.getChildren().addAll(contentEditor);
+		home.getChildren().addAll(contentEditor, viewsEditor, screensEditor);
+		
+		breadcrumb.setSelectedCrumb(home); // TODO is this needed
 	}
 	
 	// Event Handlers
@@ -127,10 +140,10 @@ public class ClientApp extends Application {
 		breadcrumb.setSelectedCrumb(contentEditor);
 	}
 	public void handleEditViews(ActionEvent e) {
-		breadcrumb.setSelectedCrumb(viewTree);
+		breadcrumb.setSelectedCrumb(viewsEditor);
 	}
 	public void handleEditScreens(ActionEvent e) {
-		breadcrumb.setSelectedCrumb(screenTree);
+		breadcrumb.setSelectedCrumb(screensEditor);
 	}
 	
 	
