@@ -21,7 +21,7 @@ public class CompleteDatabasePipeline implements JSONSerializable {
 	
 	private final ArrayList<Content> content = new ArrayList<>();
 	private final ArrayList<View> views = new ArrayList<>();
-	//private final ArrayList<Screen> screen = new ArrayList<>(); //TODO
+	private final ArrayList<Screen> screens = new ArrayList<>();
 	
 	public CompleteDatabasePipeline() {
 		// Blank const
@@ -34,6 +34,7 @@ public class CompleteDatabasePipeline implements JSONSerializable {
 	public CompleteDatabasePipeline(JSONObject ser) { // Construct from JSON
 		JSONArray contentJ = ser.getJSONArray("content");
 		JSONArray viewsJ = ser.getJSONArray("views");
+		JSONArray screenJ = ser.getJSONArray("screen");
 		
 		contentJ.forEach((o) -> {
 			JSONObject j = (JSONObject) o;
@@ -46,6 +47,12 @@ public class CompleteDatabasePipeline implements JSONSerializable {
 			View c = new View(j);
 			views.add(c);
 		});
+		
+		screenJ.forEach((o) -> {
+			JSONObject j = (JSONObject) o;
+			Screen c = new Screen(j);
+			screens.add(c);
+		});
 	}
 	
 	@Override
@@ -53,12 +60,15 @@ public class CompleteDatabasePipeline implements JSONSerializable {
 		JSONObject ser = new JSONObject();
 		JSONArray contentJ = new JSONArray();
 		JSONArray viewsJ = new JSONArray();
+		JSONArray screensJ = new JSONArray();
 		
 		for (JSONSerializable js : content) contentJ.put(js.serialize());
 		for (JSONSerializable js : views) viewsJ.put(js.serialize());
+		for (JSONSerializable js : screens) screensJ.put(js.serialize());
 		
 		ser.put("content", contentJ);
 		ser.put("views", viewsJ);
+		ser.put("screens", screensJ);
 		
 		return ser;
 	}
@@ -69,6 +79,10 @@ public class CompleteDatabasePipeline implements JSONSerializable {
 
 	public List<View> viewList() {
 		return views;
+	}
+
+	public List<Screen> screenList() {
+		return screens;
 	}
 	
 	public boolean canMoveUp(List<?> list, int entryNum) {

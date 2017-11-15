@@ -12,6 +12,7 @@ import edu.letu.lvkms.db.FlatJSON;
 import edu.letu.lvkms.structure.CompleteDatabasePipeline;
 import edu.letu.lvkms.structure.Content;
 import edu.letu.lvkms.structure.LoadableContent;
+import edu.letu.lvkms.structure.Screen;
 import edu.letu.lvkms.structure.View;
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.Response.Status;
@@ -42,6 +43,9 @@ public class App extends NanoHTTPD {
 		
 		testDB.contentList().add(slidesDoc);
 		testDB.contentList().add(baseball);
+		
+		Screen onlyScreen = new Screen("LeftScreen", testView1.getViewID());
+		testDB.screenList().add(onlyScreen);
 	}
 	
 	public App() throws IOException {
