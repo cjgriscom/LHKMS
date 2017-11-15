@@ -10,16 +10,43 @@ import org.json.JSONObject;
 
 import edu.letu.lvkms.db.FlatJSON;
 import edu.letu.lvkms.structure.CompleteDatabasePipeline;
+import edu.letu.lvkms.structure.Content;
+import edu.letu.lvkms.structure.LoadableContent;
+import edu.letu.lvkms.structure.View;
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.Response.Status;
 
 public class App extends NanoHTTPD {
-
+	
+	private static final String JSON = "application/json";
+	private static final String PLAINTEXT = "text/plain";
+	
 	//private UserList userList = new UserList();
 	private FlatJSON flatDB = new FlatJSON();
+	CompleteDatabasePipeline testDB = new CompleteDatabasePipeline();
+	private void setupTest() {
+		Content slidesDoc = new Content("Virtual Prototype", 
+				Content.Type.Slides, "https://docs.google.com/presentation/d/e/2PACX-1vRYaSEFJhJibDZ__KUn0Rn_VttvgEge9RpZ-XC753ZOgihALxtL5o3UonkD10-Qs2v0oPy-KfWgt--T/embed?start=true&loop=true&delayms=3000");
+		Content baseball = new Content("Baseball", 
+				Content.Type.YouTube, "https://www.youtube.com/embed/kt5VeNNf7iI");
+		
+		View testView1 = new View("Test View 1");
+		testView1.getStatusBar().setWeather(true);
+		testView1.getButtonBox().addEntry("VirtProto Btn", new LoadableContent(slidesDoc.getContentID()));
+		testView1.getButtonBox().addEntry("Baseball!!!", new LoadableContent(baseball.getContentID()));
+		testView1.setDefaultContent(baseball.getContentID());
+		testDB.viewList().add(testView1);
+		
+		slidesDoc.getUsers().add(testView1.getViewID());
+		baseball.getUsers().add(testView1.getViewID());
+		
+		testDB.contentList().add(slidesDoc);
+		testDB.contentList().add(baseball);
+	}
 	
 	public App() throws IOException {
 		super(8080);
+		setupTest();
 		start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
 		System.out.println("\nRunning! Point your browser to http://127.0.0.1:8080/ \n");
 
@@ -38,8 +65,8 @@ public class App extends NanoHTTPD {
 		Map<String, List<String>> parms = session.getParameters();
 		System.out.println(session.getUri());
 		switch(session.getUri()) {
-		case "/test": return newFixedLengthResponse("test success");
-		case "/getDatabase": return newFixedLengthResponse(flatDB.data().get());
+		case "/testDatabase": return newFixedLengthResponse(Status.OK, JSON, testDB.serialize().toString(3));
+		case "/getDatabase": return newFixedLengthResponse(Status.OK, JSON, flatDB.data().get());
 		case "/setDatabase": {
 			String response = flatDB.accessor().access((db) -> {
 				if (!parms.containsKey("db")) {
@@ -52,7 +79,7 @@ public class App extends NanoHTTPD {
 										)));
 				return "Success";
 			});
-			return newFixedLengthResponse(response);
+			return newFixedLengthResponse(Status.OK, PLAINTEXT, response);
 		}
 		default: {
 			URL res = this.getClass().getResource("/WebContent"+session.getUri());
