@@ -11,6 +11,7 @@ import org.json.JSONObject;
  * {
  * "viewID": string
  * "name": string
+ * "defaultContentUUID": string   <-- Optional ContentID
  * "buttonBox": {Menu}
  * "statusBar": {StatusBar}
  * }
@@ -26,6 +27,8 @@ public class View implements Serializable, JSONSerializable {
 	private final Menu buttonBox;
 	
 	private final StatusBar statusBar;
+	
+	private UUID defaultContentID = null;
 	
 	public View(String name) {
 		this.name = name;
@@ -43,6 +46,18 @@ public class View implements Serializable, JSONSerializable {
 	
 	public UUID getViewID() {
 		return viewID;
+	}
+	
+	public boolean hasDefaultContent() {
+		return defaultContentID != null;
+	}
+	
+	public UUID getDefaultContent() {
+		return defaultContentID;
+	}
+	
+	public void setDefaultContent(UUID defaultContentID) {
+		this.defaultContentID = defaultContentID;
 	}
 	
 	public String getName() {
@@ -66,6 +81,9 @@ public class View implements Serializable, JSONSerializable {
 		JSONObject ser = new JSONObject();
 		ser.put("viewID", getViewID().toString());
 		ser.put("name", getName());
+		if (defaultContentID != null) {
+			ser.put("defaultContentID", getDefaultContent().toString());
+		}
 		ser.put("buttonBox", getButtonBox().serialize());
 		ser.put("statusBar", getStatusBar().serialize());
 		
