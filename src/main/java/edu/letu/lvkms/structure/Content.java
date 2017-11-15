@@ -2,17 +2,17 @@ package edu.letu.lvkms.structure;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.UUID;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
  * JSON Format
  * {
  * "contentID": string
- * "users": [string, ...]    (list of viewIDs that use this content)
  * "name": string
  * "type": string            (Slides, Doc, YouTube, PDF)
  * "contentData": string     (usually URL of content)
@@ -30,12 +30,6 @@ public class Content implements Serializable, JSONSerializable {
 	
 	private final UUID contentID;
 	
-	/**
-	 * Used to keep a running list of all the views that 
-	 * use this Content.  
-	 */
-	private final TreeSet<UUID> users; // Set of viewIDs that use this Content 
-	
 	private final Type type;
 	
 	private String name;
@@ -47,7 +41,6 @@ public class Content implements Serializable, JSONSerializable {
 		this.name = name;
 		this.type = type;
 		this.contentData = contentData;
-		users = new TreeSet<>();
 	}
 	
 	public Content(JSONObject ser) {
@@ -55,8 +48,6 @@ public class Content implements Serializable, JSONSerializable {
 		name = ser.getString("name");
 		type = Type.valueOf(ser.getString("type"));
 		contentData = ser.getString("contentData");
-		users = new TreeSet<>();
-		ser.getJSONArray("users").forEach((o) -> users.add(UUID.fromString(o.toString())));
 	}
 
 	public UUID getContentID() {
@@ -79,25 +70,49 @@ public class Content implements Serializable, JSONSerializable {
 		this.contentData = contentData;
 	}
 	
-	public Collection<UUID> getUsers() {
-		return users;
+	public Set<UUID> getUsers(Collection<View> views) {
+		TreeSet<UUID> tree = new TreeSet<>();
+		populateUsersList(tree, null, views);
+		return tree;
+	}
+	
+	// Recursively fill out the users tree
+	@SuppressWarnings("unchecked")
+	private void populateUsersList(TreeSet<UUID> tree, View source, Collection<?> someList) {
+		for (Object o : someList ) {
+			// Sanitize entries
+			if (o instanceof Entry) {
+				o = ((Entry<String, Selectable>) o).getValue();
+			}
+			
+			if (o instanceof View) {
+				View v = (View) o;
+				// Add defaultContent entries
+				if (v.getDefaultContent().equals(this.getContentID())) tree.add(source.getViewID());
+				populateUsersList(tree, v, v.getButtonBox().entryList());
+			} else if (o instanceof Menu) {
+				Menu m = (Menu) o;
+				populateUsersList(tree, source, m.entryList());
+			} else if (o instanceof LoadableContent) {
+				// Base case
+				LoadableContent c = (LoadableContent) o;
+				if (c.getContentID().equals(this.getContentID())) tree.add(source.getViewID());
+			}
+		}
 	}
 	
 	public Type getType() {
 		return type;
 	}
 	
-	public boolean isUnused() {
-		return users.isEmpty();
+	public boolean isUnused(Collection<View> views) {
+		return getUsers(views).isEmpty();
 	}
 	
 	@Override
 	public JSONObject serialize() {
 		JSONObject ser = new JSONObject();
-		JSONArray users = new JSONArray();
-		for (UUID user : getUsers()) users.put(user.toString());
 		ser.put("contentID", getContentID().toString());
-		ser.put("users", users);
 		ser.put("name", getName());
 		ser.put("type", getType().name());
 		ser.put("contentData", getContentData());

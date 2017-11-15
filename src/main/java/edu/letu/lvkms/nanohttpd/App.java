@@ -38,14 +38,13 @@ public class App extends NanoHTTPD {
 		testView1.setDefaultContent(baseball.getContentID());
 		testDB.viewList().add(testView1);
 		
-		slidesDoc.getUsers().add(testView1.getViewID());
-		baseball.getUsers().add(testView1.getViewID());
-		
 		testDB.contentList().add(slidesDoc);
 		testDB.contentList().add(baseball);
 		
 		Screen onlyScreen = new Screen("LeftScreen", testView1.getViewID());
 		testDB.screenList().add(onlyScreen);
+		
+		System.out.println(slidesDoc.getUsers(testDB.viewList()));
 	}
 	
 	public App() throws IOException {
