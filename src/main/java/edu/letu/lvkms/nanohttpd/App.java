@@ -3,8 +3,11 @@ package edu.letu.lvkms.nanohttpd;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.json.JSONObject;
 
@@ -18,12 +21,13 @@ import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.Response.Status;
 
 public class App extends NanoHTTPD {
-	
 	private static final String JSON = "application/json";
 	private static final String PLAINTEXT = "text/plain";
 	
+	private final AtomicBoolean running = new AtomicBoolean(false);
+	
 	//private UserList userList = new UserList();
-	private FlatJSON flatDB = new FlatJSON();
+	private FlatJSON flatDB;
 	CompleteDatabasePipeline testDB = new CompleteDatabasePipeline();
 	private void setupTest() {
 		Content slidesDoc = new Content("Virtual Prototype", 
@@ -50,14 +54,33 @@ public class App extends NanoHTTPD {
 	public App() throws IOException {
 		super(8080);
 		setupTest();
+		flatDB = new FlatJSON(); // Init flat database
 		start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
+		running.set(true);
 		System.out.println("\nRunning! Point your browser to http://127.0.0.1:8080/ \n");
 
 	}
 
+	@Override
+	public void stop() {
+		System.out.println("Stopping server...");
+		running.set(false);
+		flatDB.close();
+		super.stop();
+	}
+	
 	public static void main(String[] args) {
+		Set<App> app = new HashSet<>();
+		Runtime.getRuntime().addShutdownHook(new Thread(()->{
+			System.out.println("Caught shutdown hook");
+			app.forEach((a)->{
+				if(a.running.getAndSet(false)) {
+					a.stop();
+				}
+			});
+		}));
 		try {
-			new App();
+			app.add(new App());
 		} catch (IOException ioe) {
 			System.err.println("Couldn't start server:\n" + ioe);
 		}
