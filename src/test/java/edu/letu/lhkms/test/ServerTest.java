@@ -2,7 +2,6 @@ package edu.letu.lhkms.test;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.function.Supplier;
 
 import edu.letu.lvkms.nanohttpd.App;
 
@@ -33,8 +32,7 @@ public class ServerTest extends TestClass {
 				String oldDB = HTTPUtil.sendGet(mainURL+"/getDatabase");
 				String newDB = "{\"retentionKey\":\"retentionValue\"}";
 				
-				System.out.println(HTTPUtil.sendPost(mainURL+"/setDatabase",
-						"db=" + HTTPUtil.sanitizeParameter(newDB)));
+				System.out.println(HTTPUtil.sendPost(mainURL+"/setDatabase", newDB));
 				
 				
 				System.out.println();

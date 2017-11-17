@@ -3,6 +3,7 @@ package edu.letu.lvkms.nanohttpd;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.json.JSONObject;
 
+import edu.letu.lhkms.test.HTTPUtil;
 import edu.letu.lvkms.db.FlatJSON;
 import edu.letu.lvkms.structure.CompleteDatabasePipeline;
 import edu.letu.lvkms.structure.Content;
@@ -89,23 +91,34 @@ public class App extends NanoHTTPD {
 	@Override
 	public Response serve(IHTTPSession session) {
 		Map<String, List<String>> parms = session.getParameters();
+		
 		System.out.println(session.getUri());
 		switch(session.getUri()) {
 		case "/testDatabase": return newFixedLengthResponse(Status.OK, JSON, testDB.serialize().toString(3));
 		case "/getDatabase": return newFixedLengthResponse(Status.OK, JSON, flatDB.data().get());
 		case "/setDatabase": {
-			String response = flatDB.accessor().access((db) -> {
-				if (!parms.containsKey("db")) {
-					return "The 'db' parameter must be set";
+			return flatDB.accessor().access((db) -> {
+				String json;
+				try {
+					if (!session.getHeaders().containsKey("content-length")) {
+						return newFixedLengthResponse(Status.OK, PLAINTEXT, 
+								"Error: content-length not specified");
+					}
+					System.out.println(session.getHeaders());
+					json = HTTPUtil.readFixedLengthStream(session.getInputStream(), StandardCharsets.UTF_8, Integer.parseInt(session.getHeaders().get("content-length")));
+					System.out.println(json);
+					try {
+						db.setFrom(new CompleteDatabasePipeline(new JSONObject(json)));
+					} catch (Exception e) {
+						return newFixedLengthResponse(Status.OK, PLAINTEXT, 
+								HTTPUtil.getStackDump("The database interpreter failed with the following message:", e));
+					}
+					return newFixedLengthResponse(Status.OK, PLAINTEXT, "Success");
+				} catch (IOException e) {
+					e.printStackTrace();
+					return newFixedLengthResponse(Status.OK, PLAINTEXT, HTTPUtil.getStackDump("Exception during connection:", e));
 				}
-				db.setFrom(
-						new CompleteDatabasePipeline(
-								new JSONObject(
-										parms.get("db").get(0)
-										)));
-				return "Success";
 			});
-			return newFixedLengthResponse(Status.OK, PLAINTEXT, response);
 		}
 		default: {
 			URL res = this.getClass().getResource("/WebContent"+session.getUri());

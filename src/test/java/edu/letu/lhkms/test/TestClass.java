@@ -4,7 +4,6 @@ import java.io.PrintWriter;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.reflect.Method;
-import java.util.function.Supplier;
 
 public class TestClass {
 	@Retention(RetentionPolicy.RUNTIME) static @interface TestCase {}
