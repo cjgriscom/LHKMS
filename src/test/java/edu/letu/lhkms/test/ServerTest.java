@@ -29,8 +29,8 @@ public class ServerTest extends TestClass {
 		try {
 			return runOnServer(out, () -> {
 
+				String newDB = HTTPUtil.sendGet(mainURL+"/testDatabase");
 				String oldDB = HTTPUtil.sendGet(mainURL+"/getDatabase");
-				String newDB = "{\"retentionKey\":\"retentionValue\"}";
 				
 				System.out.println(HTTPUtil.sendPost(mainURL+"/setDatabase", newDB));
 				

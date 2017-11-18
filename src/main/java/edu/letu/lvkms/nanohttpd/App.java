@@ -51,8 +51,6 @@ public class App extends NanoHTTPD {
 		
 		Screen onlyScreen = new Screen("LeftScreen", testView1.getViewID());
 		testDB.screenList().add(onlyScreen);
-		
-		System.out.println(slidesDoc.getUsers(testDB.viewList()));
 	}
 	
 	public App() throws IOException {
@@ -115,12 +113,12 @@ public class App extends NanoHTTPD {
 						sm.registerDatabaseUpdate();
 					} catch (Exception e) {
 						return newFixedLengthResponse(Status.OK, PLAINTEXT, 
-								HTTPUtil.getStackDump("The database interpreter failed with the following message:", e));
+								HTTPUtil.getStackDump("Error: The database interpreter failed with the following message: ", e));
 					}
 					return newFixedLengthResponse(Status.OK, PLAINTEXT, "Success");
 				} catch (IOException e) {
 					e.printStackTrace();
-					return newFixedLengthResponse(Status.OK, PLAINTEXT, HTTPUtil.getStackDump("Exception during connection:", e));
+					return newFixedLengthResponse(Status.OK, PLAINTEXT, HTTPUtil.getStackDump("Error: Exception during connection: ", e));
 				}
 			});
 		}
