@@ -68,7 +68,7 @@ public class CompleteDatabasePipeline implements JSONSerializable {
 		
 		ser.put("content", contentJ);
 		ser.put("views", viewsJ);
-		ser.put("screens", screensJ);
+		ser.put("screen", screensJ);
 		
 		return ser;
 	}
