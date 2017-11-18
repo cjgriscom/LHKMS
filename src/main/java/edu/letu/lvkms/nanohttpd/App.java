@@ -28,6 +28,8 @@ public class App extends NanoHTTPD {
 	
 	private final AtomicBoolean running = new AtomicBoolean(false);
 	
+	private final ScreenManager sm = new ScreenManager();
+	
 	//private UserList userList = new UserList();
 	private FlatJSON flatDB;
 	CompleteDatabasePipeline testDB = new CompleteDatabasePipeline();
@@ -94,6 +96,7 @@ public class App extends NanoHTTPD {
 		
 		System.out.println(session.getUri());
 		switch(session.getUri()) {
+		case "/msSinceLastUpdate": return newFixedLengthResponse(Status.OK, PLAINTEXT, ""+sm.lastUpdateDifferential());
 		case "/testDatabase": return newFixedLengthResponse(Status.OK, JSON, testDB.serialize().toString(3));
 		case "/getDatabase": return newFixedLengthResponse(Status.OK, JSON, flatDB.data().get());
 		case "/setDatabase": {
@@ -109,6 +112,7 @@ public class App extends NanoHTTPD {
 					System.out.println(json);
 					try {
 						db.setFrom(new CompleteDatabasePipeline(new JSONObject(json)));
+						sm.registerDatabaseUpdate();
 					} catch (Exception e) {
 						return newFixedLengthResponse(Status.OK, PLAINTEXT, 
 								HTTPUtil.getStackDump("The database interpreter failed with the following message:", e));
