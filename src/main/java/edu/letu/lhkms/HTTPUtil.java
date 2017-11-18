@@ -1,4 +1,4 @@
-package edu.letu.lhkms.test;
+package edu.letu.lhkms;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
