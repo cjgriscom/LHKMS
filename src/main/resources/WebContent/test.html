@@ -30,18 +30,53 @@ function checkTime(i) {
 }
 
 </script>
-
-<script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
-<script type='text/javascript' src='js/jquery.ba-hashchange.min.js'></script>
-<script type='text/javascript' src='js/dynamicpage.js'></script>
-
-<script type="text/javascript">
-function hideFunction() {
-	div#wrapper {     /* this will hide div with class div_class_name */
-		  display:none;
-} 
+<script>
+function hideShowWeather() {
+    var x = document.getElementById("weather");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
 </script>
+
+<script>
+function hideShowStock() {
+    var x = document.getElementById("footer");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+</script>
+
+
+
+
 <style type="text/css">
+
+.button {
+  padding: 15px 25px;
+  font-size: 24px;
+  text-align: center;
+  cursor: pointer;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
 
 body {
 	background-image: url("background.png");
@@ -84,12 +119,19 @@ aside {
     height: 400px;    
 }
 
+tradingview span.description {
+    pointer-events: none;
+}
+
 #websiteLogo {
 	float: left;
 }
 
+#cover {
+	float: right;
+}
 #wrapper #content {
-    border: 1px ridge #999;
+    
     height: auto;
     min-height: auto;
     width: auto;
@@ -102,12 +144,12 @@ aside {
 .tab_container {
     clear: both;
     width: 100%;
-    border-right: 1px ridge #999;
+    
     height: 100%;
-    border: 1px solid green;
+    
 }
 #wrapper #content #content_slides {
-    border: 1px ridge #999;
+    
     height: auto;
     min-height: auto;
     width: auto;
@@ -118,7 +160,7 @@ aside {
     float: left;
 }
 #wrapper #content #content_weather {
-    border: 1px ridge #999;
+   
     height: auto;
     min-height: auto;
     width: auto;
@@ -135,9 +177,9 @@ aside {
 .iframe_container {
     clear: both;
     width: 100%;
-    border-right: 1px ridge #999;
+    
     height: 100%;
-    border: 1px solid green;
+    
 }
 </style>
 </head>
@@ -149,22 +191,27 @@ aside {
    <img id="websiteLogo" alt="LETU Logo" src="//drive.google.com/uc?id=0Bz4D-ILXJag0ZFdEUGFnTEJxS3M"/>
    
    <h1>School of Business</h1>
-   <div style="margin: 0 0 0 15px;float: right;color:black" id="time"></div>
+   <h1 style="margin: 0 0 0 15px;float: right;color:white" id="time"></h1>
    
 </header>
 
 <hr />
-<nav>
-  
-</nav>
+
+
+
+<script type="text/javascript">
+.active {
+    pointer-events: none;
+    cursor: default;
+ } 
+</script>
 
 <div id="wrapper">
     <div id="content" class="tab_container">
-        <div style="width:100%;height:100%;overflow:hidden;" >
+        <div style="width:100%;height:100%;overflow:hidden; margin:25px 25px 25px 25px;" >
         
         <iframe width="1095" height="616" src="https://www.youtube.com/embed/kt5VeNNf7iI" ?rel=0&autoplay=1 frameborder="0" gesture="media" allowfullscreen></iframe>
-        
-        
+              
         <!--<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vT_1_s-Z_CnqPai8YSvZStxwz0gEsyUwxZGb3QFxJN7njyOR594cQcZTulQuJKKvrSkh0eYvVO5vZpE/embed?start=true&loop=true&delayms=3000"
          frameborder="0" width="1095" height="616" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
         <!--<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRYaSEFJhJibDZ__KUn0Rn_VttvgEge9RpZ-XC753ZOgihALxtL5o3UonkD10-Qs2v0oPy-KfWgt--T/embed?start=true&loop=true&delayms=3000" 
@@ -176,38 +223,45 @@ aside {
 </div>
 
 
-<iframe src="https://www.meteoblue.com/en/weather/widget/three/longview_united-states-of-america_4707814?geoloc=fixed&nocurrent=0&noforecast=0&days=4&tempunit=FAHRENHEIT&windunit=MILE_PER_HOUR&layout=monochrome"  
-frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style="margin: 1px 10px 10px 75px;width: 460px;height: 616px; float: left">
-</iframe>
-<div><!-- DO NOT REMOVE THIS LINK -->
-<a href="https://www.meteoblue.com/en/weather/forecast/week/longview_united-states-of-america_4707814?utm_source=weather_widget&utm_medium=linkus&utm_content=three&utm_campaign=Weather%2BWidget" 
-target="_blank">
-</a>
+<div style=" height: 500px; margin:145px 25px 25px 25px; ">
+	<div style="display: table-row;height: 500px; margin:145px 25px 25px 25px;">
+		
+		<div  style="display: table-cell; width: 460px; height: 500px; overflow: hidden; margin:145px 25px 25px 25px; ">
+				
+			<iframe id="weather"  src="https://www.meteoblue.com/en/weather/widget/three/longview_united-states-of-america_4707814?geoloc=fixed&nocurrent=0&noforecast=0&days=4&tempunit=FAHRENHEIT&windunit=MILE_PER_HOUR&layout=monochrome"  
+			frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style=" position: relative;  top: -45px; width: 460px;height: 540px;  float: left">
+				<script>
+        			window.setInterval(function() {
+            			reloadIFrame()
+        			}, 30);
+
+        			function reloadIFrame() {
+            			console.log('reloading..');
+            			document.getElementById('iframe').contentWindow.location.reload();
+        			}
+    			</script>
+			</iframe>
+		</div>
+
+		<div style="display: table-cell;padding:25px 25px 0 25px; hight:250px; width:200px; ">
+	 		
+	 		<button onclick="hideShowWeather()" style="height:100px;width:200px;background-color:#f2fbff"type="button">Main Page</button><br /> 
+	 		<button onclick="hideShowStock()"style="height:100px;width:200px;background-color:#f2fbff"type="button">Test</button><br />
+			<button style="height:100px;width:200px;background-color:#f2fbff"type="button">Chapel</button><br /> 
+	 		<button style="height:100px;width:200px;background-color:#f2fbff"type="button">Word</button><br /> 
+     
+   			<!-- <li><a href="MainPage.html" style="color:black">Main page</a><br/></li>
+   			<li><a href="index.html" style="color:black">Slide Show 1</a><br/></li>
+   			<li><a href="slideshow2.html" style="color:black">Slide Show 2</a><br/></li>
+  			<li><a href="WordDoc.html" style="color:black">Student Projects</a><br/></li>
+  		  	<li><a href="Chapel.html" style="color:black">Chapel Livestream</a><br/></li>
+  		  	<li><a href="#" style="color:black">Settings</a><br/></li>-->
+		</div>
+	</div>
 </div>
 
-<div style= "hight:250px; width:200px; float: right;">
-	 <button style="height:100px;width:200px;background-color:#f2fbff;background-color:#f2fbff" type="button" onclick="hideFunction()">Main Page</button><br /> 
-	 <button style="height:100px;width:200px;background-color:#f2fbff"type="button">Test</button><br />
-	 <button style="height:100px;width:200px;background-color:#f2fbff"type="button">Chapel</button><br /> 
-	 <button style="height:100px;width:200px;background-color:#f2fbff"type="button">Word</button><br /> 
-    
-    
-    
-    
-    
-    
-    
-   <!-- <li><a href="MainPage.html" style="color:black">Main page</a><br/></li>
-    <li><a href="index.html" style="color:black">Slide Show 1</a><br/></li>
-    <li><a href="slideshow2.html" style="color:black">Slide Show 2</a><br/></li>
-    <li><a href="WordDoc.html" style="color:black">Student Projects</a><br/></li>
-    <li><a href="Chapel.html" style="color:black">Chapel Livestream</a><br/></li>
-    <li><a href="#" style="color:black">Settings</a><br/></li>-->
-  
-</div>
-
-<footer> 
-<div style="margin: 2px 2px 2px 2px;">
+<footer id="footer"> 
+<!--<div style="margin: 2px 2px 2px 2px;">
 <!-- TradingView Widget BEGIN -->
 
 <!-- TradingView Widget END -->
@@ -262,16 +316,15 @@ new TradingView.MediumWidget({
   "height": "250px",
   "locale": "en"
 });
-</script>-->
-<!-- TradingView Widget END -->
+</script>
 
-</div>
+
+</div> -->
 
 <!--<marquee bgcolor="#485e82" behavior="scroll" scrollamount="15" direction="left">
 
 <!-- TradingView Widget BEGIN -->
-<span id="tradingview-copyright"><a ref="nofollow noopener" target="_blank" href="http://www.tradingview.com" style="color: rgb(173, 174, 176); font-family: &quot;Trebuchet MS&quot;, Tahoma, Arial, sans-serif; font-size: 13px;">Quotes by <span style="color: #3BB3E4">TradingView</span></a></span>
-<script src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js">{
+<script  id="tradingview" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js">{
   "symbols": [
     {
       "proName": "INDEX:SPX",
@@ -377,19 +430,11 @@ new TradingView.MediumWidget({
 });
 </script>-->
 
-</marquee>
+<!--  </marquee>-->
 </footer>
 </body>
 
 </html>
-
-
-
-
-
-
-
-
 
 
 
