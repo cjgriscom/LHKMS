@@ -17,18 +17,10 @@ import java.nio.charset.StandardCharsets;
 // Modified from https://www.mkyong.com/java/how-to-send-http-request-getpost-in-java/
 
 public class HTTPUtil {
+	
+	private static boolean DEBUG = false;
 
 	private static final String USER_AGENT = "Mozilla/5.0";
-
-	public static void main(String[] args) throws IOException {
-
-		System.out.println("Testing 1 - Send Http GET request");
-		sendGet("http://google.com");
-
-		System.out.println("\nTesting 2 - Send Http POST request");
-		sendPost("http://google.com", "");
-
-	}
 	
 	public static String sanitizeParameter(String parm) {
 		try {
@@ -50,8 +42,8 @@ public class HTTPUtil {
 		con.setRequestProperty("User-Agent", USER_AGENT);
 
 		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
+		if (DEBUG) System.out.println("\nSending 'GET' request to URL : " + url);
+		if (DEBUG) System.out.println("Response Code : " + responseCode);
 
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream()));
@@ -91,8 +83,8 @@ public class HTTPUtil {
 		}
 
 		int responseCode = con.getResponseCode();
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Response Code : " + responseCode);
+		if (DEBUG) System.out.println("\nSending 'POST' request to URL : " + url);
+		if (DEBUG) System.out.println("Response Code : " + responseCode);
 
 		BufferedReader in = new BufferedReader(
 		        new InputStreamReader(con.getInputStream()));

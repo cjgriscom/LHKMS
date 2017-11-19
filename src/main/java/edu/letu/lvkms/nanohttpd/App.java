@@ -23,6 +23,8 @@ import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.Response.Status;
 
 public class App extends NanoHTTPD {
+	private static final boolean DEBUG = false;
+	
 	private static final String JSON = "application/json";
 	private static final String PLAINTEXT = "text/plain";
 	
@@ -105,9 +107,9 @@ public class App extends NanoHTTPD {
 						return newFixedLengthResponse(Status.OK, PLAINTEXT, 
 								"Error: content-length not specified");
 					}
-					System.out.println(session.getHeaders());
+					if (DEBUG) System.out.println(session.getHeaders());
 					json = HTTPUtil.readFixedLengthStream(session.getInputStream(), StandardCharsets.UTF_8, Integer.parseInt(session.getHeaders().get("content-length")));
-					System.out.println(json);
+					if (DEBUG) System.out.println(json);
 					try {
 						db.setFrom(new CompleteDatabasePipeline(new JSONObject(json)));
 						sm.registerDatabaseUpdate();

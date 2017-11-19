@@ -1,5 +1,6 @@
 package edu.letu.lvkms.structure;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,9 @@ import edu.letu.lvkms.db.FlatJSON;
  * 
  * }
  */
-public class CompleteDatabasePipeline implements JSONSerializable {
+public class CompleteDatabasePipeline implements JSONSerializable, Serializable {
 	
+	private static final long serialVersionUID = -3724170060943693872L;
 	private final ArrayList<Content> content = new ArrayList<>();
 	private final ArrayList<View> views = new ArrayList<>();
 	private final ArrayList<Screen> screens = new ArrayList<>();

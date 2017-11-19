@@ -11,7 +11,7 @@ import org.json.JSONObject;
  * {
  * "viewID": string
  * "name": string
- * "defaultContentUUID": string   <-- Optional ContentID
+ * "defaultContentID": string   <-- Optional ContentID
  * "buttonBox": {Menu}
  * "statusBar": {StatusBar}
  * }
@@ -40,6 +40,7 @@ public class View implements Serializable, JSONSerializable {
 	public View(JSONObject ser) {
 		this.name = ser.getString("name");
 		this.viewID = UUID.fromString(ser.getString("viewID"));
+		if (ser.has("def"))
 		this.buttonBox = new Menu();
 		this.statusBar = new StatusBar();
 	}
