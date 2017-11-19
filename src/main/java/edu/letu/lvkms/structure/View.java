@@ -40,7 +40,8 @@ public class View implements Serializable, JSONSerializable {
 	public View(JSONObject ser) {
 		this.name = ser.getString("name");
 		this.viewID = UUID.fromString(ser.getString("viewID"));
-		if (ser.has("def"))
+		if (ser.has("defaultContentID")) 
+			this.defaultContentID = UUID.fromString(ser.getString("defaultContentID"));
 		this.buttonBox = new Menu();
 		this.statusBar = new StatusBar();
 	}
