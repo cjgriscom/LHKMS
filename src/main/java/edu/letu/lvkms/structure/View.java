@@ -42,8 +42,8 @@ public class View implements Serializable, JSONSerializable {
 		this.viewID = UUID.fromString(ser.getString("viewID"));
 		if (ser.has("defaultContentID")) 
 			this.defaultContentID = UUID.fromString(ser.getString("defaultContentID"));
-		this.buttonBox = new Menu();
-		this.statusBar = new StatusBar();
+		this.buttonBox = new Menu(ser.getJSONObject("buttonBox"));
+		this.statusBar = new StatusBar(ser.getJSONObject("statusBar"));
 	}
 	
 	public UUID getViewID() {

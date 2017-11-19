@@ -80,7 +80,7 @@ public class StatusBar implements Serializable, JSONSerializable {
 	}
 	
 	public boolean hasMarquee() {
-		return this.marqueeText == null;
+		return this.marqueeText != null;
 	}
 	
 	public String getMarqueeText() {
