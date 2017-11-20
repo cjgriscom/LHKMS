@@ -6,15 +6,16 @@
 <script src="jquery-1.6.2.min.js"></script>
 <!-- Example here https://stackoverflow.com/questions/6470567/jquery-load-txt-file-and-insert-into-div -->
 <script>
-$(document).ready(function() {
-        $.ajax({
-            url : "/stock?sym=NVDA",
-            dataType: "text",
-            success : function (data) {
-                $(".statusbar").html(data);
-            }
-        });
-}); 
+
+window.setInterval(function(){
+	$.ajax({
+        url : "/stock?sym=NVDA",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar").html(data);
+        }
+    });
+}, 1000);
 </script>
 </head>
 <body>
