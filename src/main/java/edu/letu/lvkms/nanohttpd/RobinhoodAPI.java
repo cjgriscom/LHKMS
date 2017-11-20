@@ -47,7 +47,7 @@ public class RobinhoodAPI {
 				.replaceAll("\\{PRICE\\}", df.format(price))
 				.replaceAll("\\{DPRICE\\}", df.format(Math.abs(changePrice)))
 				.replaceAll("\\{DPERCENT\\}", percent)
-				.replaceAll("\\{RANDOM\\}", (""+Math.random()).hashCode())
+				.replaceAll("\\{RANDOM\\}", ""+(""+Math.random()).hashCode())
 				;
 		
 		return table;
