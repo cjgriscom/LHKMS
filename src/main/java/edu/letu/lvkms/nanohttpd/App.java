@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import org.apache.http.client.ClientProtocolException;
 import org.json.JSONObject;
 
 import edu.letu.lhkms.HTTPUtil;
@@ -96,6 +97,15 @@ public class App extends NanoHTTPD {
 		
 		System.out.println(session.getUri());
 		switch(session.getUri()) {
+		case "/stock": try {
+				return newFixedLengthResponse(Status.OK, PLAINTEXT, RobinhoodAPI.getStockTable("NVDA"));
+			} catch (ClientProtocolException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		case "/msSinceLastUpdate": return newFixedLengthResponse(Status.OK, PLAINTEXT, ""+sm.lastUpdateDifferential());
 		case "/testDatabase": return newFixedLengthResponse(Status.OK, JSON, testDB.serialize().toString(3));
 		case "/getDatabase": return newFixedLengthResponse(Status.OK, JSON, flatDB.data().get());

@@ -43,7 +43,7 @@ public class ServerTest extends TestClass {
 	boolean serverGetTest(final PrintWriter out) {
 		try {
 			return runOnServer(out, () -> {
-				System.out.println(HTTPUtil.sendGet("http://127.0.0.1:8080/getDatabase"));
+				System.out.println(HTTPUtil.sendGet(mainURL + "/getDatabase"));
 				return true;
 			});
 		} catch (Exception e) {
@@ -81,7 +81,7 @@ public class ServerTest extends TestClass {
 				JSONObject newDBModified = new JSONObject(testDB.serialize().toString(3));
 				CompleteDatabasePipeline newDBM_java = new CompleteDatabasePipeline(newDBModified);
 				
-				newDBM_java.contentList().get(0).setName("MODIFIED");
+				newDBM_java.contentList().get(0).setName("MODIFIED2");
 				newDB[0] = newDBM_java.serialize().toString(3);
 				
 				HTTPUtil.sendPost(mainURL+"/setDatabase", newDB[0]);
