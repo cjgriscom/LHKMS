@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>https://stackoverflow.com/questions/6470567/jquery-load-txt-file-and-insert-into-div</title>
+<script src="jquery-1.6.2.min.js"></script>
+<!-- Example here https://stackoverflow.com/questions/6470567/jquery-load-txt-file-and-insert-into-div -->
+<script>
+$(document).ready(function() {
+        $.ajax({
+            url : "/stock",
+            dataType: "text",
+            success : function (data) {
+                $(".statusbar").html(data);
+            }
+        });
+}); 
+</script>
+</head>
+<body>
+<p>Test</p>
+<div class="statusbar" id="statusbar">
+	
+</div>
+</body>
+</html>
