@@ -8,7 +8,7 @@
 <script>
 $(document).ready(function() {
         $.ajax({
-            url : "/stock",
+            url : "/stock?sym=NVDA",
             dataType: "text",
             success : function (data) {
                 $(".statusbar").html(data);

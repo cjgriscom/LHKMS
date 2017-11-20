@@ -98,13 +98,15 @@ public class App extends NanoHTTPD {
 		System.out.println(session.getUri());
 		switch(session.getUri()) {
 		case "/stock": try {
-				return newFixedLengthResponse(Status.OK, PLAINTEXT, RobinhoodAPI.getStockTable("NVDA"));
-			} catch (ClientProtocolException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				if (parms.containsKey("sym")) {
+					return newFixedLengthResponse(Status.OK, PLAINTEXT, RobinhoodAPI.getStockTable(
+							parms.get("sym").get(0)));
+					
+				} else {
+					return newFixedLengthResponse(Status.OK, PLAINTEXT, "");
+				}
+			} catch (Exception e1) {
+				return newFixedLengthResponse(Status.OK, PLAINTEXT, "");
 			}
 		case "/msSinceLastUpdate": return newFixedLengthResponse(Status.OK, PLAINTEXT, ""+sm.lastUpdateDifferential());
 		case "/testDatabase": return newFixedLengthResponse(Status.OK, JSON, testDB.serialize().toString(3));
