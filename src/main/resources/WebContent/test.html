@@ -4,58 +4,104 @@
 <head>
 <title>TEST</title>
 <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
-<script type="text/javascript">
 
+<script type="text/javascript">
 $(function(){
     var height = $("#content").height();
     $(".tab_container").height(height);
     var height2 = $("#content_slides").height();
     $(".iframe_container").height(height2);
 });
-
-function startTime() {
-    var today = new Date();
-    var h = today.getHours();
-    var m = today.getMinutes();
-    var s = today.getSeconds();
-    m = checkTime(m);
-    s = checkTime(s);
-    document.getElementById('time').innerHTML =
-    h + ":" + m + ":" + s;
-    var t = setTimeout(startTime, 500);
-}
-function checkTime(i) {
-    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-    return i;
-}
-
 </script>
+
+
+
+
+
 <script>
-function hideShowWeather() {
-    var x = document.getElementById("weather");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
+function hideShowStuff() {
+    var a = document.getElementById("element2");
+    a.style.display = "none";
+    var b = document.getElementById("element3");
+    b.style.display = "none";
+    var c = document.getElementById("element4");
+    c.style.display = "none";
 }
 </script>
 
 <script>
-function hideShowStock() {
-    var x = document.getElementById("footer");
-    if (x.style.display === "none") {
-        x.style.display = "block";
-    } else {
-        x.style.display = "none";
-    }
+function hideShow1() {
+    var a = document.getElementById("element1");
+    if (a.style.display === "none") {
+        a.style.display = "block";
+    } 
+    var b = document.getElementById("element2");
+    b.style.display = "none";
+    var c = document.getElementById("element3");
+    c.style.display = "none";
+    var d = document.getElementById("element4");
+    d.style.display = "none";
+    
 }
 </script>
+
+<script>
+function hideShow2() {
+    var x = document.getElementById("element2");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } 
+    var b = document.getElementById("element1");
+    b.style.display = "none";
+    var c = document.getElementById("element3");
+    c.style.display = "none";
+    var d = document.getElementById("element4");
+    d.style.display = "none";
+}
+</script>
+
+<script>
+function hideShow3() {
+    var x = document.getElementById("element3");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } 
+    var b = document.getElementById("element2");
+    b.style.display = "none";
+    var c = document.getElementById("element1");
+    c.style.display = "none";
+    var d = document.getElementById("element4");
+    d.style.display = "none";
+}
+</script>
+
+<script>
+function hideShow4() {
+    var x = document.getElementById("element4");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } 
+    var b = document.getElementById("element2");
+    b.style.display = "none";
+    var c = document.getElementById("element3");
+    c.style.display = "none";
+    var d = document.getElementById("element1");
+    d.style.display = "none";
+}
+</script>
+
 
 
 
 
 <style type="text/css">
+
+#currentTime {
+  font-size: 3em;
+  text-align: center;
+  font-weight: 300;
+  border: 1px solid white;
+}
 
 .button {
   padding: 15px 25px;
@@ -132,7 +178,7 @@ tradingview span.description {
 }
 #wrapper #content {
     
-    height: auto;
+    height: 616px;
     min-height: auto;
     width: auto;
     margin-top: auto;
@@ -174,6 +220,7 @@ tradingview span.description {
  top:0;
  right:0;
  }
+ 
 .iframe_container {
     clear: both;
     width: 100%;
@@ -182,73 +229,105 @@ tradingview span.description {
     
 }
 </style>
+
+<script>
+$(document).ready(function(){
+    $("#YT").click(function(){
+        $("p").hide();
+    });
+    $("#YT").click(function(){
+        $("YT").show();
+    });
+});
+</script>
+
+<script type="text/javascript">
+window.onload = function() {
+
+	  clock();  
+
+	    function clock() {
+	    var now = new Date();
+	    var TwentyFourHour = now.getHours();
+	    var hour = now.getHours();
+	    var min = now.getMinutes();
+	    var mid = 'pm';
+	    if (min < 10) {
+	      min = "0" + min;
+	    }
+
+	    if (hour > 12) {
+	      hour = hour - 12;
+	    }
+	      
+	    if(hour==0){ 
+	      hour=12;
+	    }
+
+	    if(TwentyFourHour < 12) {
+	       mid = 'am';
+	    }
+	      
+	    document.getElementById('currentTime').innerHTML = hour+':'+min + mid ;
+	    setTimeout(clock, 1000);
+	  }
+	}
+</script>
 </head>
-<body onload="startTime()">
+
+<body>
 
 <header>
    
-   
    <img id="websiteLogo" alt="LETU Logo" src="//drive.google.com/uc?id=0Bz4D-ILXJag0ZFdEUGFnTEJxS3M"/>
-   
    <h1>School of Business</h1>
-   <h1 style="margin: 0 0 0 15px;float: right;color:white" id="time"></h1>
-   
+   <div style="float: right;">
+   <h1 style="margin: 5px 5px 5px 15px;float: right;color:black"id="currentTime"></h1>
+   </div>
+
 </header>
 
 <hr />
 
-
-
-<script type="text/javascript">
-.active {
-    pointer-events: none;
-    cursor: default;
- } 
-</script>
-
 <div id="wrapper">
     <div id="content" class="tab_container">
-        <div style="width:100%;height:100%;overflow:hidden; margin:25px 25px 25px 25px;" >
+        <div style="width:100%;height:100%; margin:25px 25px 25px 65px;" >
         
-        <iframe width="1095" height="616" src="https://www.youtube.com/embed/kt5VeNNf7iI" ?rel=0&autoplay=1 frameborder="0" gesture="media" allowfullscreen></iframe>
+        <iframe id="element1" width="1350" height="759" src="https://www.youtube.com/embed/kt5VeNNf7iI" ?rel=0&autoplay=1 frameborder="0" gesture="media" allowfullscreen></iframe>
               
-        <!--<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vT_1_s-Z_CnqPai8YSvZStxwz0gEsyUwxZGb3QFxJN7njyOR594cQcZTulQuJKKvrSkh0eYvVO5vZpE/embed?start=true&loop=true&delayms=3000"
-         frameborder="0" width="1095" height="616" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-        <!--<iframe src="https://docs.google.com/presentation/d/e/2PACX-1vRYaSEFJhJibDZ__KUn0Rn_VttvgEge9RpZ-XC753ZOgihALxtL5o3UonkD10-Qs2v0oPy-KfWgt--T/embed?start=true&loop=true&delayms=3000" 
-          id="content_slides" class="iframe_container"
-          frameborder="0" width="100%" height="100%" 
-          allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>-->
+        <iframe id="element2" onload="hideShowStuff()" src="https://docs.google.com/presentation/d/e/2PACX-1vT_1_s-Z_CnqPai8YSvZStxwz0gEsyUwxZGb3QFxJN7njyOR594cQcZTulQuJKKvrSkh0eYvVO5vZpE/embed?start=true&loop=true&delayms=3000"
+         frameborder="0" width="1350" height="759" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+        <iframe id="element3" src="https://docs.google.com/presentation/d/e/2PACX-1vRYaSEFJhJibDZ__KUn0Rn_VttvgEge9RpZ-XC753ZOgihALxtL5o3UonkD10-Qs2v0oPy-KfWgt--T/embed?start=true&loop=true&delayms=3000" 
+          frameborder="0" width="1350" height="759" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+        <iframe id="element4" width="1350" height="759" src="https://docs.google.com/document/d/e/2PACX-1vRfbWISMZqD1gyTKLYd-aQ1_NTFoWBpuFGx7ONYedMkiUvRl85fyCvfkGKdWHiAMru2wmdid8AZaxME/pub?embedded=true"></iframe>
+        
         </div>
     </div>
 </div>
 
 
-<div style=" height: 500px; margin:145px 25px 25px 25px; ">
-	<div style="display: table-row;height: 500px; margin:145px 25px 25px 25px;">
+<div style=" height: 675px; margin:145px 25px 25px 25px; ">
+	<div style="display: table-row;height: 675px; margin:145px 25px 25px 25px;">
 		
-		<div  style="display: table-cell; width: 460px; height: 500px; overflow: hidden; margin:145px 25px 25px 25px; ">
+		<div  style="display: table-cell; width: 1200px; height: 675px; overflow: hidden; margin:145px 25px 25px 25px; ">
 				
-			<iframe id="weather"  src="https://www.meteoblue.com/en/weather/widget/three/longview_united-states-of-america_4707814?geoloc=fixed&nocurrent=0&noforecast=0&days=4&tempunit=FAHRENHEIT&windunit=MILE_PER_HOUR&layout=monochrome"  
+			<!--<iframe id="weather"  src="https://www.meteoblue.com/en/weather/widget/three/longview_united-states-of-america_4707814?geoloc=fixed&nocurrent=0&noforecast=0&days=4&tempunit=FAHRENHEIT&windunit=MILE_PER_HOUR&layout=monochrome"  
 			frameborder="0" scrolling="NO" allowtransparency="true" sandbox="allow-same-origin allow-scripts allow-popups" style=" position: relative;  top: -45px; width: 460px;height: 540px;  float: left">
 				<script>
-        			window.setInterval(function() {
-            			reloadIFrame()
-        			}, 30);
-
-        			function reloadIFrame() {
-            			console.log('reloading..');
-            			document.getElementById('iframe').contentWindow.location.reload();
-        			}
-    			</script>
-			</iframe>
+					window.setInterval("reloadIFrame();", 30000);
+					function reloadIFrame() {
+ 					document.getElementById("weather").src="https://www.meteoblue.com/en/weather/widget/three/longview_united-states-of-america_4707814?geoloc=fixed&nocurrent=0&noforecast=0&days=4&tempunit=FAHRENHEIT&windunit=MILE_PER_HOUR&layout=monochrome";
+					}
+					</script> 
+			</iframe>-->
 		</div>
 
 		<div style="display: table-cell;padding:25px 25px 0 25px; hight:250px; width:200px; ">
 	 		
-	 		<button onclick="hideShowWeather()" style="height:100px;width:200px;background-color:#f2fbff"type="button">Main Page</button><br /> 
-	 		<button onclick="hideShowStock()"style="height:100px;width:200px;background-color:#f2fbff"type="button">Test</button><br />
-			<button style="height:100px;width:200px;background-color:#f2fbff"type="button">Chapel</button><br /> 
-	 		<button style="height:100px;width:200px;background-color:#f2fbff"type="button">Word</button><br /> 
+	 		<button onclick="hideShow1()" style="height:150px;width:300px;background-color:#f2fbff; opacity: 0.5;"type="button">World Series</button><br /> 
+	 		<button onclick="hideShow2()" style="height:150px;width:300px;background-color:#f2fbff; opacity: 0.5;"type="button">Chapel</button><br />
+			<button onclick="hideShow3()" style="height:150px;width:300px;background-color:#f2fbff; opacity: 0.5;"type="button">Slides</button><br /> 
+	 		<button onclick="hideShow4()" style="height:150px;width:300px;background-color:#f2fbff; opacity: 0.5;"type="button">Text</button><br /> 
      
    			<!-- <li><a href="MainPage.html" style="color:black">Main page</a><br/></li>
    			<li><a href="index.html" style="color:black">Slide Show 1</a><br/></li>
@@ -261,70 +340,35 @@ tradingview span.description {
 </div>
 
 <footer id="footer"> 
-<!--<div style="margin: 2px 2px 2px 2px;">
-<!-- TradingView Widget BEGIN -->
 
-<!-- TradingView Widget END -->
-<!-- TradingView Widget BEGIN -->
+<script>
 
+window.setInterval(function(){
+	
+	$.ajax({
+        url : "/stock?sym=NVDA",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar").html(data);
+        }
+    });
+}, 1000);
 
-
-
-<!-- TradingView Widget END -->
-<!-- TradingView Widget BEGIN -->
-<!--<div id="tv-medium-widget-e2e77"></div>
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-<script type="text/javascript">
-new TradingView.MediumWidget({
-  "container_id": "tv-medium-widget-e2e77",
-  "symbols": [
-    [
-      "Apple",
-      "AAPL "
-    ],
-    [
-      "Google",
-      "GOOGL"
-    ],
-    [
-      "Microsoft",
-      "MSFT"
-    ],
-    [
-      "GOLD",
-      "TVC:GOLD|max"
-    ],
-    [
-      "SILVER",
-      "TVC:SILVER|max"
-    ],
-    [
-      "S&P 500",
-      "INDEX:SPX|max"
-    ],
-    [
-      "DJI",
-      "DJ:DJI|max"
-    ]
-  ],
-  "greyText": "Quotes by",
-  "gridLineColor": "#e9e9ea",
-  "fontColor": "#83888D",
-  "underLineColor": "#dbeffb",
-  "trendLineColor": "#4bafe9",
-  "width": "1800px",
-  "height": "250px",
-  "locale": "en"
-});
+window.setInterval(function(){
+}, 1000);
 </script>
 
+<marquee bgcolor="#485e82" behavior="scroll" scrollamount="10" direction="left">
+<div class="statusbar" id="statusbar">
+</div>
+</marquee>
 
-</div> -->
+
 
 <!--<marquee bgcolor="#485e82" behavior="scroll" scrollamount="15" direction="left">
 
 <!-- TradingView Widget BEGIN -->
-<script  id="tradingview" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js">{
+<!--<script name="weather" id="tradingview" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js">{
   "symbols": [
     {
       "proName": "INDEX:SPX",
@@ -376,59 +420,8 @@ new TradingView.MediumWidget({
     }
   ],
   "locale": "en"
-}</script>
-<!-- TradingView Widget END -->
+}</script>-->
 
-
-
-
-
-<!--<div id="tv-medium-widget-654fc"></div>
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-<script type="text/javascript">
-new TradingView.MediumWidget({
-  "container_id": "tv-medium-widget-654fc",
-  "symbols": [
-    [
-      "Apple",
-      "AAPL "
-    ],
-    [
-      "Google",
-      "GOOGL"
-    ],
-    [
-      "Microsoft",
-      "MSFT"
-    ],
-    [
-      "GOLD",
-      "TVC:GOLD|max"
-    ],
-    [
-      "SILVER",
-      "TVC:SILVER|max"
-    ],
-    [
-      "S&P 500",
-      "INDEX:SPX|max"
-    ],
-    [
-      "DJI",
-      "DJ:DJI|max"
-    ]
-  ],
-  "greyText": "Quotes by",
-  "gridLineColor": "#e9e9ea",
-  "fontColor": "#83888D",
-  "underLineColor": "#dbeffb",
-  "trendLineColor": "#4bafe9",
-  "width": "1800px",
-  "height": "245px",
-  "locale": "en",
-  "chartOnly": true
-});
-</script>-->
 
 <!--  </marquee>-->
 </footer>

@@ -3,35 +3,66 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<style>
+
+
+
+
+#currentTime {
+  font-size: 4em;
+  text-align: center;
+  font-weight: 300;
+  color: #f05b19;
+  border: 1px solid #fff;
+  width: 200px;
+  margin: 100px auto;
+}
+</style>
+<script type="text/javascript">
+window.onload = function() {
+
+	  clock();  
+
+	    function clock() {
+	    var now = new Date();
+	    var TwentyFourHour = now.getHours();
+	    var hour = now.getHours();
+	    var min = now.getMinutes();
+	    var mid = 'pm';
+	    if (min < 10) {
+	      min = "0" + min;
+	    }
+
+	    if (hour > 12) {
+	      hour = hour - 12;
+	    }
+	      
+	    if(hour==0){ 
+	      hour=12;
+	    }
+
+	    if(TwentyFourHour < 12) {
+	       mid = 'am';
+	    }
+	      
+	    document.getElementById('currentTime').innerHTML = hour+':'+min + mid ;
+	    setTimeout(clock, 1000);
+
+	  }
+	  
+
+	  
+	}
+
+
+
+
+</script>
 </head>
 <body>
-<!-- TradingView Widget BEGIN -->
-<span id="tradingview-copyright"><a ref="nofollow noopener" target="_blank" href="http://www.tradingview.com" style="color: rgb(173, 174, 176); font-family: &quot;Trebuchet MS&quot;, Tahoma, Arial, sans-serif; font-size: 13px;">Quotes by <span style="color: #3BB3E4">TradingView</span></a></span>
-<script src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js">{
-  "symbols": [
-    {
-      "proName": "INDEX:SPX",
-      "title": "S&P 500"
-    },
-    {
-      "proName": "INDEX:IUXX",
-      "title": "Nasdaq 100"
-    },
-    {
-      "proName": "FX_IDC:EURUSD",
-      "title": "EUR/USD"
-    },
-    {
-      "proName": "NYMEX:CL1!",
-      "title": "Crude Oil"
-    },
-    {
-      "proName": "FX_IDC:XAUUSD",
-      "title": "Gold"
-    }
-  ],
-  "locale": "en"
-}</script>
-<!-- TradingView Widget END -->
+
+
+<h1 id="currentTime"></h1>
+
 </body>
 </html>

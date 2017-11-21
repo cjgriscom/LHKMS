@@ -9,19 +9,24 @@
 
 window.setInterval(function(){
 	$.ajax({
-        url : "/stock?sym=NVDA",
+        url : "/stock?sym=AMD",
         dataType: "text",
         success : function (data) {
             $(".statusbar").html(data);
         }
     });
 }, 1000);
+
+
 </script>
 </head>
 <body>
 <p>Test</p>
+<marquee bgcolor="#485e82" behavior="scroll" scrollamount="10" direction="left">
 <div class="statusbar" id="statusbar">
-	
 </div>
+</marquee>
 </body>
+
+
 </html>
