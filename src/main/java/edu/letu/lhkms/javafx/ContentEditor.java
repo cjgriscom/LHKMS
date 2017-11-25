@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
@@ -25,6 +26,9 @@ public class ContentEditor extends ContainerChild {
 			this.c=c;
 		}
 		
+		public String toString() {
+			return c.getName();
+		}
 	}
 	
 	public ContentEditor(ClientApp app, Region parent) {

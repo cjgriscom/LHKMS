@@ -6,8 +6,12 @@ import static edu.letu.lhkms.javafx.FXUtil.labeledVField;
 import static edu.letu.lhkms.javafx.FXUtil.padded;
 import static edu.letu.lhkms.javafx.FXUtil.showAlert;
 
-import org.controlsfx.control.BreadCrumbBar;
+import java.io.IOException;
 
+import org.controlsfx.control.BreadCrumbBar;
+import org.json.JSONObject;
+
+import edu.letu.lhkms.HTTPUtil;
 import edu.letu.lhkms.structure.CompleteDatabasePipeline;
 import javafx.application.Application;
 import javafx.beans.binding.StringExpression;
@@ -47,7 +51,7 @@ public class ClientApp extends Application {
 			new SimpleStringProperty("Longview Hall Kiosk Management System");
 	
 	private final StringProperty titleBar = new SimpleStringProperty();
-	private final TextField address = new TextField();
+	private final TextField address = new TextField("localhost:8080");
 	private final TextField username = new TextField();
 	private final TextField password = new TextField();
 	
@@ -119,7 +123,7 @@ public class ClientApp extends Application {
 		stage.show();
 		
 		// !Begin!
-		rebuildTree();
+		rebuildTree(); // Blank tree
 		breadcrumb.setSelectedCrumb(home);
 	}
 	
@@ -138,10 +142,27 @@ public class ClientApp extends Application {
 		breadcrumb.setSelectedCrumb(home); // TODO is this needed
 	}
 	
+	public boolean loadDatabase() {
+		String address = this.address.getText();
+		
+		try {
+			String jsonDB = HTTPUtil.sendGet("http://" + address + "/getDatabase");
+			db.set(new CompleteDatabasePipeline(new JSONObject(jsonDB)));
+			rebuildTree();
+		} catch (IOException | RuntimeException e) {
+			e.printStackTrace();
+			showAlert("Error", "Error connecting to server", null);
+			return false;
+		}
+		
+		return true;
+	}
+	
 	// Event Handlers
 	
 	public void processLogin(ActionEvent e) {
-		showAlert("Login", "Login Successful", null);
+		if (loadDatabase())
+			showAlert("Login", "Login Successful", null);
 	}
 	
 	public void processQuit(ActionEvent e) {
