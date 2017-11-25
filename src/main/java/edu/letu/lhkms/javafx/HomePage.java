@@ -1,4 +1,4 @@
-package edu.letu.lvkms.javafx;
+package edu.letu.lhkms.javafx;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;

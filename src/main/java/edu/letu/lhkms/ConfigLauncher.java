@@ -1,6 +1,6 @@
 package edu.letu.lhkms;
 
-import edu.letu.lvkms.javafx.ClientApp;
+import edu.letu.lhkms.javafx.ClientApp;
 
 public class ConfigLauncher {
 

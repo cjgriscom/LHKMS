@@ -1,6 +1,6 @@
-package edu.letu.lvkms;
+package edu.letu.lhkms;
 
-import static edu.letu.lvkms.Host.HostPlatform.*;
+import static edu.letu.lhkms.Host.HostPlatform.*;
 
 import java.io.File;
 

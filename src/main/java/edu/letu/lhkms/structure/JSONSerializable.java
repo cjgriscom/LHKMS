@@ -1,4 +1,4 @@
-package edu.letu.lvkms.structure;
+package edu.letu.lhkms.structure;
 
 import org.json.JSONObject;
 

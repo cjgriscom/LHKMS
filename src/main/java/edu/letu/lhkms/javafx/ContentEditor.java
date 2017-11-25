@@ -1,7 +1,7 @@
-package edu.letu.lvkms.javafx;
+package edu.letu.lhkms.javafx;
 
-import edu.letu.lvkms.structure.CompleteDatabasePipeline;
-import edu.letu.lvkms.structure.Content;
+import edu.letu.lhkms.structure.CompleteDatabasePipeline;
+import edu.letu.lhkms.structure.Content;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

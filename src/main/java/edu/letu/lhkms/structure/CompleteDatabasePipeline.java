@@ -1,4 +1,4 @@
-package edu.letu.lvkms.structure;
+package edu.letu.lhkms.structure;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import edu.letu.lvkms.db.FlatJSON;
+import edu.letu.lhkms.db.FlatJSON;
 
 /**
  * JSON Format

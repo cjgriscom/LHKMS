@@ -1,4 +1,4 @@
-package edu.letu.lvkms.javafx;
+package edu.letu.lhkms.javafx;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.geometry.HPos;
@@ -9,10 +9,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 
-public class ViewsEditor extends ContainerChild {
-	public ViewsEditor(ClientApp app, Region parent) {
-		super("Views", new SimpleStringProperty("Views Editor"), parent);
-		Label conf = new Label("Views Editor");
+public class ScreensEditor extends ContainerChild {
+	public ScreensEditor(ClientApp app, Region parent) {
+		super("Screens", new SimpleStringProperty("Screen Editor"), parent);
+		Label conf = new Label("Screen Editor");
 		conf.setFont(Font.font(28));
 		this.setAlignment(Pos.CENTER);
 		int y = 0;
