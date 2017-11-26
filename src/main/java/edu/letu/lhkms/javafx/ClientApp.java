@@ -158,6 +158,25 @@ public class ClientApp extends Application {
 		return true;
 	}
 	
+	public void commitDB() {
+		String address = this.address.getText();
+		try {
+			String resp = HTTPUtil.sendPost("http://" + address + "/setDatabase", db.get().serialize().toString());
+			if (resp.equals("Success")) {
+				// Do nothing
+			} else {
+
+				showAlert("Error", "Error commiting database changes", resp);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+			showAlert("Error", "Error commiting database changes", null);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			showAlert("Error", "Error commiting database changes", null);
+		}
+	}
+	
 	// Event Handlers
 	
 	public void processLogin(ActionEvent e) {

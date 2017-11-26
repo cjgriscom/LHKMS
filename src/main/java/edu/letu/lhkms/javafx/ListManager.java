@@ -7,16 +7,18 @@ import java.util.function.Supplier;
 import edu.letu.lhkms.structure.InteractiveList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 public class ListManager extends VBox {
-	private final Button moveUp = padded(new Button("Move Up"));
-	private final Button moveDown = padded(new Button("Move Down"));
-	private final Button newB = padded(new Button("New"));
-	private final Button delete = padded(new Button("Delete"));
-	private final Button edit = padded(new Button("Edit"));
+	private final Button moveUp = (new Button("Move Up"));
+	private final Button moveDown = (new Button("Move Down"));
+	private final Button newB = (new Button("New"));
+	private final Button delete = (new Button("Delete"));
+	private final Button edit = (new Button("Edit"));
 	
 	private final ListView<?> list;
 	private final Supplier<InteractiveList> target;
@@ -30,11 +32,13 @@ public class ListManager extends VBox {
 		moveDown.setOnAction(wrapEvent((i) -> {return target.get().canMoveDown(i) ? target.get().moveDown(i) : -1;}));
 		// TODO other buttons
 		this.getChildren().addAll(
-				FXUtil.padded(newB),
-				FXUtil.padded(edit),
-				FXUtil.padded(moveUp),
-				FXUtil.padded(moveDown),
-				FXUtil.padded(delete)
+				FXUtil.vspring(),
+				barButton(newB),
+				barButton(edit),
+				barButton(moveUp),
+				barButton(moveDown),
+				barButton(delete),
+				FXUtil.vspring()
 				);
 	}
 	
@@ -53,5 +57,13 @@ public class ListManager extends VBox {
 	
 	interface ExtendedEventHandler {
 		public abstract int process(int selected);
+	}
+	
+	public Region barButton(Button b) {
+		b.setPrefWidth(100);
+		VBox box = padded(new VBox(b));
+		b.setAlignment(Pos.BOTTOM_CENTER);
+		box.setAlignment(Pos.BOTTOM_CENTER);
+		return box;
 	}
 }

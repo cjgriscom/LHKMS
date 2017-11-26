@@ -19,8 +19,6 @@ import java.nio.charset.StandardCharsets;
 public class HTTPUtil {
 	
 	private static boolean DEBUG = false;
-
-	private static final String USER_AGENT = "Mozilla/5.0";
 	
 	public static String sanitizeParameter(String parm) {
 		try {
@@ -37,9 +35,7 @@ public class HTTPUtil {
 
 		// optional default is GET
 		con.setRequestMethod("GET");
-
-		//add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
+		con.setUseCaches( false );
 
 		int responseCode = con.getResponseCode();
 		if (DEBUG) System.out.println("\nSending 'GET' request to URL : " + url);

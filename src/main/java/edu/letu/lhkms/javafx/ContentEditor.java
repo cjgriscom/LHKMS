@@ -43,6 +43,7 @@ public class ContentEditor extends ContainerChild {
 		ListView<ContentItem> lv = new ListView<>(contentList);
 		ListManager lm = new ListManager(lv, ()->{return app.db.get().contentListModifier();}, () -> {
 			repopulate(app.db.get());
+			app.commitDB();
 		});
 		this.setAlignment(Pos.CENTER);
 		int y = 0;
