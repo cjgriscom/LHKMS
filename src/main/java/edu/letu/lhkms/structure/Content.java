@@ -88,7 +88,7 @@ public class Content implements Serializable, JSONSerializable {
 			if (o instanceof View) {
 				View v = (View) o;
 				// Add defaultContent entries
-				if (v.getDefaultContent().equals(this.getContentID())) tree.add(source.getViewID());
+				if (v.getDefaultContent() != null && v.getDefaultContent().equals(this.getContentID())) tree.add(v.getViewID());
 				populateUsersList(tree, v, v.getButtonBox().entryList());
 			} else if (o instanceof Menu) {
 				Menu m = (Menu) o;
