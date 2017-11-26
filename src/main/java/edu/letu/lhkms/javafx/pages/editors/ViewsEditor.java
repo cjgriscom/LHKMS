@@ -1,4 +1,4 @@
-package edu.letu.lhkms.javafx.editors;
+package edu.letu.lhkms.javafx.pages.editors;
 
 import java.util.List;
 

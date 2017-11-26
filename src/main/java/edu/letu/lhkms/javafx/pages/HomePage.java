@@ -1,5 +1,8 @@
-package edu.letu.lhkms.javafx;
+package edu.letu.lhkms.javafx.pages;
 
+import edu.letu.lhkms.javafx.ClientApp;
+import edu.letu.lhkms.javafx.ContainerChild;
+import edu.letu.lhkms.javafx.FXUtil;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
