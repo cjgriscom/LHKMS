@@ -2,6 +2,7 @@ package edu.letu.lhkms.javafx;
 
 import edu.letu.lhkms.structure.CompleteDatabasePipeline;
 import edu.letu.lhkms.structure.Content;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,9 +21,9 @@ public class ContentEditor extends ContainerChild {
 	private final ObservableList<ContentItem> contentList = FXCollections.observableArrayList();
 	private final ClientApp app;
 	
-	class ContentItem extends Label {
-		private final Content c;
-		public ContentItem(Content c) {
+	private class ContentItem extends Label {
+		final Content c;
+		ContentItem(Content c) {
 			super(c.getName());
 			if (!c.isUnused(app.db.get().viewList())) {
 				this.setStyle("-fx-font-weight:bold;");
@@ -45,10 +46,17 @@ public class ContentEditor extends ContainerChild {
 			repopulate(app.db.get());
 			app.commitDB();
 		});
+		
+		HBox navigator = new HBox(lv, lm);
+		
+		navigator.translateXProperty().bind(lm.widthProperty().divide(2)); // Center with respect to lv
+		
 		this.setAlignment(Pos.CENTER);
 		int y = 0;
 		this.add(conf, 0, y++);
-		this.add(new HBox(lv, lm), 0, y++);
+		this.add(FXUtil.vspring(), 0, y++);
+		this.add(navigator, 0, y++);
+		this.add(FXUtil.vspring(), 0, y++);
 		for (Node n : getChildren()) 
 			GridPane.setHalignment(n, HPos.CENTER);
 		

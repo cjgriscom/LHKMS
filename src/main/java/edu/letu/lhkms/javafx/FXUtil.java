@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -20,7 +21,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class FXUtil {
-
+	public static void addStylesheet(Scene scene, String resource) {
+		scene.getStylesheets().add(FXUtil.class.getResource(resource).toExternalForm());
+	}
+	
 	public static <T extends Region> T background(T r, Color color) {
 		r.setBackground(new Background(new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY)));
 		return r;

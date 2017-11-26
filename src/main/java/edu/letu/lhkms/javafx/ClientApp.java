@@ -116,6 +116,7 @@ public class ClientApp extends Application {
 		container.maxWidthProperty().bind(stage.widthProperty());
 		
 		Scene scene = new Scene(prim);
+		FXUtil.addStylesheet(scene, "/clientapp.css");
 		stage.titleProperty().bind(titleBar);
 		stage.setScene(scene);
 		stage.setWidth(800);
