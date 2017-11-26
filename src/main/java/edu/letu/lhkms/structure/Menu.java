@@ -22,18 +22,18 @@ import org.json.JSONObject;
  * 
  * }
  */
-public class Menu implements Selectable, Serializable, JSONSerializable {
+public class Menu 
+		extends InteractiveListImpl<Entry<String, Selectable>> 
+		implements Selectable, Serializable, JSONSerializable {
 	
 	private static final long serialVersionUID = -6483672860914849698L;
 	
-	private final ArrayList<Entry<String, Selectable>> entries;
-	
 	public Menu() {
-		this.entries = new ArrayList<>();
+		super(new ArrayList<>());
 	}
 	
 	public Menu(JSONObject ser) {
-		this.entries = new ArrayList<>();
+		super(new ArrayList<>());
 		ser.getJSONArray("entries").forEach((o) -> {
 			JSONObject j = (JSONObject) o;
 			String type = j.getString("type");
@@ -43,24 +43,20 @@ public class Menu implements Selectable, Serializable, JSONSerializable {
 			if (type.equals("menu")) s = new Menu(selectableJSON);
 			else if (type.equals("content")) s = new LoadableContent(selectableJSON);
 			if (s == null) throw new IllegalArgumentException("Type field "+type+" not recognized in Menu entry");
-			entries.add(new SimpleEntry<>(title, s));
+			list.add(new SimpleEntry<>(title, s));
 		});
 	}
 	
 	public void addEntry(String title, Selectable s) {
-		this.entries.add(new SimpleEntry<>(title, s));
+		this.list.add(new SimpleEntry<>(title, s));
 	}
 	
 	public String getTitle(int entryNum) {
-		return entries.get(entryNum).getKey();
+		return list.get(entryNum).getKey();
 	}
 	
 	public Selectable getSelectable(int entryNum) {
-		return entries.get(entryNum).getValue();
-	}
-	
-	public void remove(int entryNum) {
-		entries.remove(entryNum);
+		return list.get(entryNum).getValue();
 	}
 	
 	/**
@@ -68,31 +64,9 @@ public class Menu implements Selectable, Serializable, JSONSerializable {
 	 * @return Copy of entries for iteration
 	 */
 	public List<Entry<String, Selectable>> entryList() {
-		return entries;
+		return list;
 	}
 	
-	public boolean canMoveUp(int entryNum) {
-		return entryNum > 0;
-	}
-	
-	public boolean canMoveDown(int entryNum) {
-		return entryNum < size() - 1;
-	}
-	
-	public void moveUp(int entryNum) {
-		if (!canMoveUp(entryNum)) throw new IllegalArgumentException("Cannot move entry upwards");
-		entries.add(entryNum-1, entries.remove(entryNum));
-	}
-	
-	public void modeDown(int entryNum) {
-		if (!canMoveDown(entryNum)) throw new IllegalArgumentException("Cannot move entry upwards");
-		entries.add(entryNum+1, entries.remove(entryNum));
-	}
-	
-	public int size() {
-		return entries.size();
-	}
-
 	// Used in menu serialization
 	@Override
 	public String jsonTypeID() {

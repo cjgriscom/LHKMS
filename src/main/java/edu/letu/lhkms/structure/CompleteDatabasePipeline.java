@@ -24,6 +24,9 @@ public class CompleteDatabasePipeline implements JSONSerializable, Serializable 
 	private final ArrayList<Content> content = new ArrayList<>();
 	private final ArrayList<View> views = new ArrayList<>();
 	private final ArrayList<Screen> screens = new ArrayList<>();
+	private final transient InteractiveList contentMod = new InteractiveListImpl<>(content);
+	private final transient InteractiveList viewsMod = new InteractiveListImpl<>(views);
+	private final transient InteractiveList screensMod = new InteractiveListImpl<>(screens);
 	
 	public CompleteDatabasePipeline() {
 		// Blank const
@@ -86,23 +89,17 @@ public class CompleteDatabasePipeline implements JSONSerializable, Serializable 
 	public List<Screen> screenList() {
 		return screens;
 	}
-	
-	public boolean canMoveUp(List<?> list, int entryNum) {
-		return entryNum > 0;
+
+	public InteractiveList contentListModifier() {
+		return contentMod;
 	}
-	
-	public boolean canMoveDown(List<?> list, int entryNum) {
-		return entryNum < list.size() - 1;
+
+	public InteractiveList viewListModifier() {
+		return viewsMod;
 	}
-	
-	public <T> void moveUp(List<T> list, int entryNum) {
-		if (!canMoveUp(list, entryNum)) throw new IllegalArgumentException("Cannot move entry upwards");
-		list.add(entryNum-1, list.remove(entryNum));
-	}
-	
-	public <T> void modeDown(List<T> list, int entryNum) {
-		if (!canMoveDown(list, entryNum)) throw new IllegalArgumentException("Cannot move entry upwards");
-		list.add(entryNum+1, list.remove(entryNum));
+
+	public InteractiveList screenListModifier() {
+		return screensMod;
 	}
 	
 }

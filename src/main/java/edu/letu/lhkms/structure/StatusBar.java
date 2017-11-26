@@ -25,6 +25,7 @@ public class StatusBar implements Serializable, JSONSerializable {
 	private static final long serialVersionUID = 3700830180680986009L;
 	
 	private final ArrayList<String> stocks;
+	private transient final InteractiveList stocksMod;
 	
 	private boolean weather;
 	private boolean time;
@@ -69,6 +70,10 @@ public class StatusBar implements Serializable, JSONSerializable {
 	
 	public List<String> getStocks() {
 		return stocks;
+	}
+	
+	public InteractiveList getStocksModifier() {
+		return stocksMod;
 	}
 	
 	public void setMarquee(String text) {
