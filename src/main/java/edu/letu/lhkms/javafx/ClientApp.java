@@ -16,8 +16,10 @@ import edu.letu.lhkms.structure.CompleteDatabasePipeline;
 import javafx.application.Application;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.binding.When;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -42,7 +44,7 @@ import javafx.stage.WindowEvent;
 public class ClientApp extends Application {
 	
 	final ObjectProperty<CompleteDatabasePipeline> db = new SimpleObjectProperty<>();
-	
+	final BooleanProperty loaded = new SimpleBooleanProperty(false);
 	
 	
 	
@@ -139,7 +141,8 @@ public class ClientApp extends Application {
 
 		home.getChildren().addAll(contentEditor, viewsEditor, screensEditor);
 		
-		breadcrumb.setSelectedCrumb(home); // TODO is this needed
+		if (!loaded.get()) breadcrumb.setSelectedCrumb(home); 
+		// TODO validate current breadcrumb and backtrack if needed
 	}
 	
 	public boolean loadDatabase() {
@@ -149,9 +152,11 @@ public class ClientApp extends Application {
 			String jsonDB = HTTPUtil.sendGet("http://" + address + "/getDatabase");
 			db.set(new CompleteDatabasePipeline(new JSONObject(jsonDB)));
 			rebuildTree();
+			loaded.set(true);
 		} catch (IOException | RuntimeException e) {
 			e.printStackTrace();
 			showAlert("Error", "Error connecting to server", null);
+			loaded.set(false);
 			return false;
 		}
 		
