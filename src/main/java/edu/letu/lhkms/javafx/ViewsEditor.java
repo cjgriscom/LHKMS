@@ -1,24 +1,31 @@
 package edu.letu.lhkms.javafx;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.text.Font;
+import java.util.List;
 
-public class ViewsEditor extends ContainerChild {
+import edu.letu.lhkms.structure.CompleteDatabasePipeline;
+import edu.letu.lhkms.structure.InteractiveList;
+import edu.letu.lhkms.structure.View;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
+
+public class ViewsEditor extends TopLevelListEditor<View> {
 	public ViewsEditor(ClientApp app, Region parent) {
-		super("Views", new SimpleStringProperty("Views Editor"), parent);
-		Label conf = new Label("Views Editor");
-		conf.setFont(Font.font(28));
-		this.setAlignment(Pos.CENTER);
-		int y = 0;
-		this.add(conf, 0, y++);
-		this.add(FXUtil.vspring(), 0, y++);
-		for (Node n : getChildren()) 
-			GridPane.setHalignment(n, HPos.CENTER);
+		super("Views", "View Editor", parent, app);
+	}
+	
+	public Label constructListLabel(View item) {
+		Label l = new Label(item.getName());
+		//TODO
+		return l;
+	}
+
+	@Override
+	public List<View> getMatchingDatabaseList(CompleteDatabasePipeline db) {
+		return db.viewList();
+	}
+
+	@Override
+	public InteractiveList getMatchingModifierList(CompleteDatabasePipeline db) {
+		return db.viewListModifier();
 	}
 }

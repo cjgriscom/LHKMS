@@ -1,24 +1,31 @@
 package edu.letu.lhkms.javafx;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.text.Font;
+import java.util.List;
 
-public class ScreensEditor extends ContainerChild {
+import edu.letu.lhkms.structure.CompleteDatabasePipeline;
+import edu.letu.lhkms.structure.InteractiveList;
+import edu.letu.lhkms.structure.Screen;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Region;
+
+public class ScreensEditor extends TopLevelListEditor<Screen> {
 	public ScreensEditor(ClientApp app, Region parent) {
-		super("Screens", new SimpleStringProperty("Screen Editor"), parent);
-		Label conf = new Label("Screen Editor");
-		conf.setFont(Font.font(28));
-		this.setAlignment(Pos.CENTER);
-		int y = 0;
-		this.add(conf, 0, y++);
-		this.add(FXUtil.vspring(), 0, y++);
-		for (Node n : getChildren()) 
-			GridPane.setHalignment(n, HPos.CENTER);
+		super("Screens", "Screen Editor", parent, app);
+	}
+	
+	public Label constructListLabel(Screen item) {
+		Label l = new Label(item.getName());
+		//TODO
+		return l;
+	}
+
+	@Override
+	public List<Screen> getMatchingDatabaseList(CompleteDatabasePipeline db) {
+		return db.screenList();
+	}
+
+	@Override
+	public InteractiveList getMatchingModifierList(CompleteDatabasePipeline db) {
+		return db.screenListModifier();
 	}
 }
