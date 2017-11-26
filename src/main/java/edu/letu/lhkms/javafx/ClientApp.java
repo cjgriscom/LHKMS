@@ -47,8 +47,8 @@ import javafx.stage.WindowEvent;
 
 public class ClientApp extends Application {
 	
-	final ObjectProperty<CompleteDatabasePipeline> db = new SimpleObjectProperty<>();
-	final BooleanProperty loaded = new SimpleBooleanProperty(false);
+	public final ObjectProperty<CompleteDatabasePipeline> db = new SimpleObjectProperty<>();
+	public final BooleanProperty loaded = new SimpleBooleanProperty(false);
 	
 	
 	
