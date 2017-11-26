@@ -8,11 +8,10 @@ import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 
@@ -39,10 +38,13 @@ public class ContentEditor extends ContainerChild {
 		Label conf = new Label("Content Editor");
 		conf.setFont(Font.font(28));
 		ListView<ContentItem> lv = new ListView<>(contentList);
+		ListManager lm = new ListManager(lv, ()->{return app.db.get().contentListModifier();}, () -> {
+			repopulate(app.db.get());
+		});
 		this.setAlignment(Pos.CENTER);
 		int y = 0;
 		this.add(conf, 0, y++);
-		this.add(lv, 0, y++);
+		this.add(new HBox(lv, lm), 0, y++);
 		for (Node n : getChildren()) 
 			GridPane.setHalignment(n, HPos.CENTER);
 		
