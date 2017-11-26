@@ -32,6 +32,8 @@ public class StatusBar implements Serializable, JSONSerializable {
 	
 	private String marqueeText = null;
 	
+	public StatusBar() {}
+	
 	public StatusBar(JSONObject ser) {
 		this.weather = ser.getBoolean("weather");
 		this.time = ser.getBoolean("time");
