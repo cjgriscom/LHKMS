@@ -12,6 +12,9 @@ import org.controlsfx.control.BreadCrumbBar;
 import org.json.JSONObject;
 
 import edu.letu.lhkms.HTTPUtil;
+import edu.letu.lhkms.javafx.editors.ContentEditor;
+import edu.letu.lhkms.javafx.editors.ScreensEditor;
+import edu.letu.lhkms.javafx.editors.ViewsEditor;
 import edu.letu.lhkms.structure.CompleteDatabasePipeline;
 import javafx.application.Application;
 import javafx.beans.binding.StringExpression;

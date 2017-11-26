@@ -1,7 +1,11 @@
-package edu.letu.lhkms.javafx;
+package edu.letu.lhkms.javafx.editors;
 
 import java.util.List;
 
+import edu.letu.lhkms.javafx.ClientApp;
+import edu.letu.lhkms.javafx.ContainerChild;
+import edu.letu.lhkms.javafx.FXUtil;
+import edu.letu.lhkms.javafx.ListManager;
 import edu.letu.lhkms.structure.CompleteDatabasePipeline;
 import edu.letu.lhkms.structure.InteractiveList;
 import javafx.beans.property.SimpleStringProperty;

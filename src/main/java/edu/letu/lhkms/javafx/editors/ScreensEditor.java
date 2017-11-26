@@ -1,7 +1,8 @@
-package edu.letu.lhkms.javafx;
+package edu.letu.lhkms.javafx.editors;
 
 import java.util.List;
 
+import edu.letu.lhkms.javafx.ClientApp;
 import edu.letu.lhkms.structure.CompleteDatabasePipeline;
 import edu.letu.lhkms.structure.InteractiveList;
 import edu.letu.lhkms.structure.Screen;
