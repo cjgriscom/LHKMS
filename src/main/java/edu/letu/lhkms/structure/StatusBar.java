@@ -24,20 +24,15 @@ public class StatusBar implements Serializable, JSONSerializable {
 	
 	private static final long serialVersionUID = 3700830180680986009L;
 	
-	private final ArrayList<String> stocks;
-	private transient final InteractiveList stocksMod;
+	private final ArrayList<String> stocks = new ArrayList<>();
+	private transient final InteractiveList stocksMod = new InteractiveListImpl<>(stocks);
 	
 	private boolean weather;
 	private boolean time;
 	
 	private String marqueeText = null;
 	
-	public StatusBar() {
-		this.stocks = new ArrayList<>();
-	}
-	
 	public StatusBar(JSONObject ser) {
-		this.stocks = new ArrayList<>();
 		this.weather = ser.getBoolean("weather");
 		this.time = ser.getBoolean("time");
 		if (ser.getBoolean("marquee")) this.marqueeText = ser.getString("marqueeText");
