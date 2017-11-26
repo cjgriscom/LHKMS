@@ -17,21 +17,24 @@ import javafx.scene.text.Font;
 
 public class ContentEditor extends ContainerChild {
 	
-	ObservableList<ContentItem> contentList = FXCollections.observableArrayList();
+	private final ObservableList<ContentItem> contentList = FXCollections.observableArrayList();
+	private final ClientApp app;
 	
-	static class ContentItem {
+	class ContentItem extends Label {
 		private final Content c;
 		public ContentItem(Content c) {
+			super(c.getName());
+			if (!c.isUnused(app.db.get().viewList())) {
+				this.setStyle("-fx-font-weight:bold;");
+			}
 			this.c=c;
-		}
-		
-		public String toString() {
-			return c.getName();
 		}
 	}
 	
 	public ContentEditor(ClientApp app, Region parent) {
 		super("Content", new SimpleStringProperty("Content Editor"), parent);
+		
+		this.app = app;
 		
 		app.db.addListener((e,o,n) -> repopulate(n));
 		
