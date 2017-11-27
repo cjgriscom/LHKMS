@@ -21,11 +21,12 @@ public class Screen implements Serializable, JSONSerializable {
 	private static final long serialVersionUID = -6743094463689414632L;
 	
 	private String name;
-	private UUID screenID;
+	private final UUID screenID;
 	private UUID viewID;
 	
-	public Screen(String name, UUID screenID, UUID viewID) {
+	public Screen(String name, UUID viewID) {
 		this.name = name;
+		this.screenID = UUID.randomUUID();
 		this.viewID = viewID;
 	}
 	
