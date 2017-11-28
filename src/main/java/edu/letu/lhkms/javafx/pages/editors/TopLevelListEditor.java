@@ -1,6 +1,7 @@
 package edu.letu.lhkms.javafx.pages.editors;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import edu.letu.lhkms.javafx.ClientApp;
 import edu.letu.lhkms.javafx.ContainerChild;
@@ -8,7 +9,6 @@ import edu.letu.lhkms.javafx.FXUtil;
 import edu.letu.lhkms.javafx.ListManager;
 import edu.letu.lhkms.structure.CompleteDatabasePipeline;
 import edu.letu.lhkms.structure.InteractiveList;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.HPos;
@@ -26,8 +26,8 @@ public abstract class TopLevelListEditor<T> extends ContainerChild {
 	private final ObservableList<Label> labelList = FXCollections.observableArrayList();
 	protected final ClientApp app;
 
-	public TopLevelListEditor(String breadcrumbName, String name, Region parent, ClientApp app) {
-		super(breadcrumbName, new SimpleStringProperty(name), parent);
+	public TopLevelListEditor(String breadcrumbName, String name, Region parent, ClientApp app, Consumer<T> onEdit) {
+		super(breadcrumbName, name, parent);
 		
 		this.app = app;
 		
@@ -36,10 +36,10 @@ public abstract class TopLevelListEditor<T> extends ContainerChild {
 		Label conf = new Label(name);
 		conf.setFont(Font.font(28));
 		ListView<Label> lv = new ListView<>(labelList);
-		ListManager lm = new ListManager(lv, ()->{return getMatchingModifierList(app.db.get());}, () -> {
+		ListManager<T> lm = new ListManager<T>(lv, ()->{return getMatchingModifierList(app.db.get());}, () -> {
 			repopulate(app.db.get());
 			app.commitDB();
-		});
+		}, onEdit);
 		
 		HBox navigator = new HBox(lv, lm);
 		
@@ -65,6 +65,6 @@ public abstract class TopLevelListEditor<T> extends ContainerChild {
 	}
 	
 	public abstract List<T> getMatchingDatabaseList(CompleteDatabasePipeline db);
-	public abstract InteractiveList getMatchingModifierList(CompleteDatabasePipeline db);
+	public abstract InteractiveList<T> getMatchingModifierList(CompleteDatabasePipeline db);
 	public abstract Label constructListLabel(T item);
 }

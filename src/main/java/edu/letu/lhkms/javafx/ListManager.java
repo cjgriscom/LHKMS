@@ -2,6 +2,7 @@ package edu.letu.lhkms.javafx;
 
 import static edu.letu.lhkms.javafx.FXUtil.padded;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import edu.letu.lhkms.structure.InteractiveList;
@@ -13,7 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
-public class ListManager extends VBox {
+public class ListManager<T> extends VBox {
 	private final Button moveUp = (new Button("Move Up"));
 	private final Button moveDown = (new Button("Move Down"));
 	private final Button newB = (new Button("New"));
@@ -21,15 +22,16 @@ public class ListManager extends VBox {
 	private final Button edit = (new Button("Edit"));
 	
 	private final ListView<?> list;
-	private final Supplier<InteractiveList> target;
+	private final Supplier<InteractiveList<T>> target;
 	private final Runnable callback;
 	
-	public ListManager(ListView<?> list, Supplier<InteractiveList> target, Runnable callback) {
+	public ListManager(ListView<?> list, Supplier<InteractiveList<T>> target, Runnable callback, Consumer<T> onEdit) {
 		this.list = list;
 		this.target = target;
 		this.callback = callback;
 		moveUp.setOnAction(wrapEvent((i) -> {return target.get().canMoveUp(i) ? target.get().moveUp(i) : -1;}));
 		moveDown.setOnAction(wrapEvent((i) -> {return target.get().canMoveDown(i) ? target.get().moveDown(i) : -1;}));
+		edit.setOnAction(wrapEvent((i) -> {if (target.get().exists(i)) onEdit.accept(target.get().get(i)); return -1;}));
 		// TODO other buttons
 		this.getChildren().addAll(
 				FXUtil.vspring(),

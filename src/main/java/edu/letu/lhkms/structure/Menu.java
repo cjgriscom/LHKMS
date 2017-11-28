@@ -23,7 +23,7 @@ import org.json.JSONObject;
  * }
  */
 public class Menu 
-		extends InteractiveListImpl<Entry<String, Selectable>> 
+		extends InteractiveList<Entry<String, Selectable>> 
 		implements Selectable, Serializable, JSONSerializable {
 	
 	private static final long serialVersionUID = -6483672860914849698L;

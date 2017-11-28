@@ -11,7 +11,7 @@ import javafx.scene.layout.Region;
 
 public class ContentEditor extends TopLevelListEditor<Content> {
 	public ContentEditor(ClientApp app, Region parent) {
-		super("Content", "Content Editor", parent, app);
+		super("Content", "Content Editor", parent, app, (c) -> app.handleEditItem(c.getContentID()));
 	}
 	
 	public Label constructListLabel(Content item) {
@@ -28,7 +28,7 @@ public class ContentEditor extends TopLevelListEditor<Content> {
 	}
 
 	@Override
-	public InteractiveList getMatchingModifierList(CompleteDatabasePipeline db) {
+	public InteractiveList<Content> getMatchingModifierList(CompleteDatabasePipeline db) {
 		return db.contentListModifier();
 	}
 }

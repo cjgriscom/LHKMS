@@ -11,7 +11,7 @@ import javafx.scene.layout.Region;
 
 public class ScreensEditor extends TopLevelListEditor<Screen> {
 	public ScreensEditor(ClientApp app, Region parent) {
-		super("Screens", "Screen Editor", parent, app);
+		super("Screens", "Screen Editor", parent, app, (s) -> app.handleEditItem(s.getScreenID()));
 	}
 	
 	public Label constructListLabel(Screen item) {
@@ -26,7 +26,7 @@ public class ScreensEditor extends TopLevelListEditor<Screen> {
 	}
 
 	@Override
-	public InteractiveList getMatchingModifierList(CompleteDatabasePipeline db) {
+	public InteractiveList<Screen> getMatchingModifierList(CompleteDatabasePipeline db) {
 		return db.screenListModifier();
 	}
 }

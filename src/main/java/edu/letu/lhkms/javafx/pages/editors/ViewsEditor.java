@@ -11,7 +11,7 @@ import javafx.scene.layout.Region;
 
 public class ViewsEditor extends TopLevelListEditor<View> {
 	public ViewsEditor(ClientApp app, Region parent) {
-		super("Views", "View Editor", parent, app);
+		super("Views", "View Editor", parent, app, (v) -> app.handleEditItem(v.getViewID()));
 	}
 	
 	public Label constructListLabel(View item) {
@@ -26,7 +26,7 @@ public class ViewsEditor extends TopLevelListEditor<View> {
 	}
 
 	@Override
-	public InteractiveList getMatchingModifierList(CompleteDatabasePipeline db) {
+	public InteractiveList<View> getMatchingModifierList(CompleteDatabasePipeline db) {
 		return db.viewListModifier();
 	}
 }

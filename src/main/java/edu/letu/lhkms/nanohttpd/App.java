@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONObject;
 
 import edu.letu.lhkms.HTTPUtil;

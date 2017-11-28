@@ -25,7 +25,7 @@ public class StatusBar implements Serializable, JSONSerializable {
 	private static final long serialVersionUID = 3700830180680986009L;
 	
 	private final ArrayList<String> stocks = new ArrayList<>();
-	private transient final InteractiveList stocksMod = new InteractiveListImpl<>(stocks);
+	private transient final InteractiveList<String> stocksMod = new InteractiveList<>(stocks);
 	
 	private boolean weather;
 	private boolean time;
@@ -69,7 +69,7 @@ public class StatusBar implements Serializable, JSONSerializable {
 		return stocks;
 	}
 	
-	public InteractiveList getStocksModifier() {
+	public InteractiveList<String> getStocksModifier() {
 		return stocksMod;
 	}
 	

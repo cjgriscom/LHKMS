@@ -7,6 +7,8 @@ import static edu.letu.lhkms.javafx.FXUtil.padded;
 import static edu.letu.lhkms.javafx.FXUtil.showAlert;
 
 import java.io.IOException;
+import java.util.TreeMap;
+import java.util.UUID;
 
 import org.controlsfx.control.BreadCrumbBar;
 import org.json.JSONObject;
@@ -16,7 +18,9 @@ import edu.letu.lhkms.javafx.pages.HomePage;
 import edu.letu.lhkms.javafx.pages.editors.ContentEditor;
 import edu.letu.lhkms.javafx.pages.editors.ScreensEditor;
 import edu.letu.lhkms.javafx.pages.editors.ViewsEditor;
+import edu.letu.lhkms.javafx.pages.editors.content.ContentItemEditor;
 import edu.letu.lhkms.structure.CompleteDatabasePipeline;
+import edu.letu.lhkms.structure.Content;
 import javafx.application.Application;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.binding.When;
@@ -75,7 +79,8 @@ public class ClientApp extends Application {
 			buildTreeItem(new ViewsEditor(this, container));
 	private final TreeItem<ContainerChild> screensEditor = 
 			buildTreeItem(new ScreensEditor(this, container));
-
+	
+	private final TreeMap<UUID, TreeItem<ContainerChild>> cachedContainers = new TreeMap<>();
 	
 	private Stage stage;
 	
@@ -134,6 +139,13 @@ public class ClientApp extends Application {
 		breadcrumb.setSelectedCrumb(home);
 	}
 	
+	public TreeItem<ContainerChild> getTreeItemByUUID(UUID uuid) {
+		return cachedContainers.get(uuid);
+	}
+	
+	public ContainerChild getContainerByUUID(UUID uuid) {
+		return cachedContainers.get(uuid).getValue();
+	}
 
 	// Data Management
 	@SuppressWarnings("unchecked")
@@ -146,8 +158,24 @@ public class ClientApp extends Application {
 
 		home.getChildren().addAll(contentEditor, viewsEditor, screensEditor);
 		
-		if (!loaded.get()) breadcrumb.setSelectedCrumb(home); 
-		// TODO validate current breadcrumb and backtrack if needed
+		if (loaded.get()) {
+			// Build subtrees
+			for (Content c : db.get().contentList()) {
+				TreeItem<ContainerChild> child;
+				if (cachedContainers.containsKey(c.getContentID())) {
+					child = getTreeItemByUUID(c.getContentID());
+				} else {
+					cachedContainers.put(c.getContentID(), 
+							child = new TreeItem<>(new ContentItemEditor(c, container)));
+				}
+				contentEditor.getChildren().add(child);
+			}
+			// TODO the rest
+		} else {
+			breadcrumb.setSelectedCrumb(home); 
+			
+		}
+		// TODO validate current breadcrumb and backtrack if needed***
 	}
 	
 	public boolean loadDatabase() {
@@ -156,8 +184,9 @@ public class ClientApp extends Application {
 		try {
 			String jsonDB = HTTPUtil.sendGet("http://" + address + "/getDatabase");
 			db.set(new CompleteDatabasePipeline(new JSONObject(jsonDB)));
+			loaded.set(true);  // It's important that this comes before rebuildTree
+			// Otherwise it won't populate the breadcrumb
 			rebuildTree();
-			loaded.set(true);
 		} catch (IOException | RuntimeException e) {
 			e.printStackTrace();
 			showAlert("Error", "Error connecting to server", null);
@@ -206,6 +235,9 @@ public class ClientApp extends Application {
 	}
 	public void handleEditScreens(ActionEvent e) {
 		breadcrumb.setSelectedCrumb(screensEditor);
+	}
+	public void handleEditItem(UUID itemID) {
+		breadcrumb.setSelectedCrumb(getTreeItemByUUID(itemID));
 	}
 	
 	

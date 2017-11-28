@@ -24,9 +24,9 @@ public class CompleteDatabasePipeline implements JSONSerializable, Serializable 
 	private final ArrayList<Content> content = new ArrayList<>();
 	private final ArrayList<View> views = new ArrayList<>();
 	private final ArrayList<Screen> screens = new ArrayList<>();
-	private final transient InteractiveList contentMod = new InteractiveListImpl<>(content);
-	private final transient InteractiveList viewsMod = new InteractiveListImpl<>(views);
-	private final transient InteractiveList screensMod = new InteractiveListImpl<>(screens);
+	private final transient InteractiveList<Content> contentMod = new InteractiveList<>(content);
+	private final transient InteractiveList<View> viewsMod = new InteractiveList<>(views);
+	private final transient InteractiveList<Screen> screensMod = new InteractiveList<>(screens);
 	
 	public CompleteDatabasePipeline() {
 		// Blank const
@@ -90,15 +90,15 @@ public class CompleteDatabasePipeline implements JSONSerializable, Serializable 
 		return screens;
 	}
 
-	public InteractiveList contentListModifier() {
+	public InteractiveList<Content> contentListModifier() {
 		return contentMod;
 	}
 
-	public InteractiveList viewListModifier() {
+	public InteractiveList<View> viewListModifier() {
 		return viewsMod;
 	}
 
-	public InteractiveList screenListModifier() {
+	public InteractiveList<Screen> screenListModifier() {
 		return screensMod;
 	}
 	
