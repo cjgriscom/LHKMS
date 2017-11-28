@@ -17,7 +17,25 @@ window.setInterval(function(){
     });
 }, 1000);
 
+window.setInterval(function(){
+	$.ajax({
+        url : "/stock?sym=NVDA",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar").html(data);
+        }
+    });
+}, 1000);
 
+window.setInterval(function(){
+	$.ajax({
+        url : "/stock?sym=NVDA",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar").html(data);
+        }
+    });
+}, 1000);
 </script>
 </head>
 <body>
