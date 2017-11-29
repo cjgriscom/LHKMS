@@ -261,6 +261,8 @@ tradingview span.description {
     opacity: 1;
     transition: 0s
 }
+
+
 </style>
 
 <script>
@@ -367,15 +369,211 @@ window.setInterval(function(){
             $(".statusbar").html(data);
         }
     });
+	
+	$.ajax({
+        url : "/stock?sym=AMD",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar1").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=AAPL",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar2").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=INTC",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar3").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=GOOGL",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar4").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=AMZN",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar5").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=FB",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar6").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=TWTR",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar7").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=MSFT",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar8").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=GE",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar9").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=NFLX",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar10").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=TSLA",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar11").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=VZ",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar12").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=DIS",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar13").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=WMT",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar14").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=T",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar15").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=SBUX",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar16").html(data);
+        }
+    });
+	
+	$.ajax({
+        url : "/stock?sym=XOM",
+        dataType: "text",
+        success : function (data) {
+            $(".statusbar17").html(data);
+        }
+    });
 }, 1000);
+
+
 
 window.setInterval(function(){
 }, 1000);
 </script>
 
 <marquee bgcolor="#485e82" behavior="scroll" scrollamount="10" direction="left" style= "float: left;" >
-<div class="statusbar" id="statusbar">
-</div>
+
+<table>
+<tbody>
+<tr>
+<td >Stocks:  </td>
+<td class="statusbar" id="statusbar"></td>
+
+<td class="statusbar1" id="statusbar1"></td>
+
+<td class="statusbar2" id="statusbar2"></td>
+
+<td class="statusbar3" id="statusbar3"></td>
+
+<td class="statusbar4" id="statusbar4"></td>
+
+<td class="statusbar5" id="statusbar5"></td>
+
+<td class="statusbar6" id="statusbar6"></td>
+
+<td class="statusbar7" id="statusbar7"></td>
+
+<td class="statusbar8" id="statusbar8"></td>
+
+<td class="statusbar9" id="statusbar9"></td>
+
+<td class="statusbar10" id="statusbar10"></td>
+
+<td class="statusbar11" id="statusbar11"></td>
+
+<td class="statusbar12" id="statusbar12"></td>
+
+<td class="statusbar13" id="statusbar13"></td>
+
+<td class="statusbar14" id="statusbar14"></td>
+
+<td class="statusbar15" id="statusbar15"></td>
+
+<td class="statusbar16" id="statusbar16"></td>
+
+<td class="statusbar17" id="statusbar17"></td>
+
+<td >Weather:  </td>
+<td>
+<div style="width: 850px;"><iframe style="display: block;" src="https://cdnres.willyweather.com/widget/loadView.html?id=76653" width="850" height="92" frameborder="0" scrolling="no"></iframe><a style="height: 92px;width: 20px;text-indent: -9999em;float: right;position: relative;z-index: 1;margin: -92px 0 0 0" href="https://www.willyweather.com/tx/gregg-county/longview.html" rel="nofollow">weather</a></div>
+
+
+</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+<!--  <div class="statusbar" id="statusbar"></div>
+<div class="statusbar1" id="statusbar1"></div>-->
 </marquee>
 
 
