@@ -84,6 +84,13 @@ function hideShow4() {
 	switchContent("#iframe4", "<iframe id='iframe4' width='1350' height='759' src='https://www.echalk.co.uk/amusements/Games/Tetrominoes/tetrominoes.html'></iframe>");
 }
 
+function hideShow5() {
+	switchContent("#iframe5", "<iframe id='iframe5' width='1350' height='759' src='https://docs.google.com/document/d/e/2PACX-1vRfbWISMZqD1gyTKLYd-aQ1_NTFoWBpuFGx7ONYedMkiUvRl85fyCvfkGKdWHiAMru2wmdid8AZaxME/pub?embedded=true'></iframe>");
+}
+
+//function hideShow6() {
+	//switchContent("#iframe6", "<iframe id='iframe6' width='1350' height='759' src='https://www.echalk.co.uk/amusements/Games/Tetrominoes/tetrominoes.html'></iframe>");
+//}
 </script>
 
 
@@ -99,26 +106,7 @@ function hideShow4() {
   border: 1px solid white;
 }
 
-.button {
-  padding: 15px 25px;
-  font-size: 24px;
-  text-align: center;
-  cursor: pointer;
-  outline: none;
-  color: #fff;
-  background-color: #4CAF50;
-  border: none;
-  border-radius: 15px;
-  box-shadow: 0 9px #999;
-}
 
-.button:hover {background-color: #3e8e41}
-
-.button:active {
-  background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
-}
 
 body {
 	background-image: url("background.png");
@@ -235,6 +223,44 @@ tradingview span.description {
     height: 100%;
     
 }
+
+.button {
+    position: relative;
+    background-color: #4CAF50;
+    border: none;
+    font-size: 28px;
+    color: #FFFFFF;
+    padding: 20px;
+    width: 350px;
+    height:100px;
+    text-align: center;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.button:after {
+    content: "";
+    background: #f1f1f1;
+    display: block;
+    position: absolute;
+    padding-top: 300%;
+    padding-left: 350%;
+    margin-left: -20px !important;
+    margin-top: -120%;
+    opacity: 0;
+    transition: all 0.8s
+}
+
+.button:active:after {
+    padding: 0;
+    margin: 10;
+    opacity: 1;
+    transition: 0s
+}
 </style>
 
 <script>
@@ -289,7 +315,7 @@ window.onload = function() {
    <img id="websiteLogo" alt="LETU Logo" src="logo_white.png"/>
    <h1 class="lucida"><span class="tB">S</span><span class="tS">CHOOL OF </span><span class="tB">B</span><span class="tS">USINESS</span></h1>
    <div style="float: right;">
-   <h1 class="lucida" style="margin: 5px 5px 5px 15px;float: right;color:black"id="currentTime"></h1>
+   <h1 class="lucida" style="margin: 0px 5px 5px 15px;float: right;color:black"id="currentTime"></h1>
    </div>
 
 </header>
@@ -310,19 +336,19 @@ window.onload = function() {
 </div>
 
 
-<div style=" height: 675px; margin:145px 25px 25px 25px; ">
+<div style=" height: 675px; margin:145px 25px 25px 25px; padding-left: 80px;">
 	<div style="display: table-row;height: 675px; margin:145px 25px 25px 25px;">
 		
-		<div style="display: table-cell; width: 1200px; height: 675px; overflow: hidden; margin:145px 25px 25px 25px; ">
-			<!-- TODO is this needed?? -->
-		</div>
+		
 
 		<div style="display: table-cell;padding:25px 25px 0 25px; hight:250px; width:200px; ">
 	 		
-	 		<button onclick="hideShow1()" style="height:150px;width:300px;background-color:#f2fbff; opacity: 0.5;"type="button">World Series</button><br /> 
-	 		<button onclick="hideShow2()" style="height:150px;width:300px;background-color:#f2fbff; opacity: 0.5;"type="button">Chapel</button><br />
-			<button onclick="hideShow3()" style="height:150px;width:300px;background-color:#f2fbff; opacity: 0.5;"type="button">Slides</button><br /> 
-	 		<button onclick="hideShow4()" style="height:150px;width:300px;background-color:#f2fbff; opacity: 0.5;"type="button">Text</button><br /> 
+	 		<button class="button" onclick="hideShow1()" type="button">World Series</button><br /> 
+	 		<button class="button" onclick="hideShow2()" type="button">Chapel</button><br />
+			<button class="button" onclick="hideShow3()" type="button">Slides</button><br /> 
+	 		<button class="button" onclick="hideShow4()" type="button">Tetris</button><br /> 
+	 		<button class="button" onclick="hideShow5()" type="button">Text</button><br />
+	 		<!-- <button class="button" onclick="hideShow6()" type="button">Text</button><br />-->
      
 		</div>
 	</div>
@@ -347,72 +373,14 @@ window.setInterval(function(){
 }, 1000);
 </script>
 
-<marquee bgcolor="#485e82" behavior="scroll" scrollamount="10" direction="left">
+<marquee bgcolor="#485e82" behavior="scroll" scrollamount="10" direction="left" style= "float: left;" >
 <div class="statusbar" id="statusbar">
 </div>
 </marquee>
 
 
 
-<!--<marquee bgcolor="#485e82" behavior="scroll" scrollamount="15" direction="left">
 
-<!-- TradingView Widget BEGIN -->
-<!--<script name="weather" id="tradingview" src="https://s3.tradingview.com/external-embedding/embed-widget-tickers.js">{
-  "symbols": [
-    {
-      "proName": "INDEX:SPX",
-      "title": "S&P 500"
-    },
-    {
-      "proName": "INDEX:IUXX",
-      "title": "Nasdaq 100"
-    },
-    {
-      "proName": "FX_IDC:EURUSD",
-      "title": "EUR/USD"
-    },
-    {
-      "proName": "NYMEX:CL1!",
-      "title": "Crude Oil"
-    },
-    {
-      "proName": "FX_IDC:XAUUSD",
-      "title": "Gold"
-    },
-    {
-      "description": "Apple",
-      "proName": "NASDAQ:AAPL"
-    },
-    {
-      "description": "Microsoft",
-      "proName": "NASDAQ:MSFT"
-    },
-    {
-      "description": "Google",
-      "proName": "NASDAQ:GOOGL"
-    },
-    {
-      "description": "Nvidea",
-      "proName": "NASDAQ:NVDA"
-    },
-    {
-      "description": "AMD",
-      "proName": "NASDAQ:AMD"
-    },
-    {
-      "description": "Intel",
-      "proName": "NASDAQ:INTC"
-    },
-    {
-      "description": "Silver",
-      "proName": "TVC:SILVER"
-    }
-  ],
-  "locale": "en"
-}</script>-->
-
-
-<!--  </marquee>-->
 </footer>
 </body>
 
