@@ -15,6 +15,14 @@ public final class Accessor<T extends Database<T>> {
 		src.db.commit();
 	}
 	
+	public synchronized <V> V commit(Function<T, V> func) {
+		try {
+			return func.apply(src);
+		} finally {
+			src.db.commit(); // Commit prior to return
+		}
+	}
+	
 	public synchronized void access(Consumer<T> consumer) {
 		consumer.accept(src);
 	}
