@@ -3,6 +3,7 @@ package edu.letu.lhkms.javafx.pages.editors.content;
 import edu.letu.lhkms.javafx.ContainerChild;
 import edu.letu.lhkms.javafx.FXUtil;
 import edu.letu.lhkms.structure.Content;
+import edu.letu.lhkms.structure.View;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -10,15 +11,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 
-public class ContentItemEditor extends ContainerChild {
+public class ViewItemEditor extends ContainerChild {
 	int gpY = 0;
-	Content c;
+	View v;
 	
-	public ContentItemEditor(Content c, Region parent) {
-		super(c.getName(), c.getName(), parent);
-		this.c = c;
+	public ViewItemEditor(View v, Region parent) {
+		super(v.getName(), v.getName(), parent);
+		this.v = v;
 		
-		TextField name = new TextField(c.getName());
+		TextField name = new TextField(v.getName());
 		name.setFont(Font.font(28));
 		
 		GridPane fields = new GridPane();

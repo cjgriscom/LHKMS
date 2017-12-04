@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -23,6 +26,16 @@ public class Util {
 	static PasswordAuthentication auth = new PasswordAuthentication();
 	
 	private static File storageRoot = null;
+	
+	public static String readWeb(String filename) throws IOException, URISyntaxException {
+		return new String(Files.readAllBytes(Paths.get(
+				Util.class.getResource("/WebContent/"+filename).toURI())));
+	}
+	
+	public static String read(String filename) throws IOException, URISyntaxException {
+		return new String(Files.readAllBytes(Paths.get(
+				Util.class.getResource("/"+filename).toURI())));
+	}
 	
 	/**
 	 * Produces a security token for authenticating the client.

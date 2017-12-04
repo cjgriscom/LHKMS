@@ -1,0 +1,35 @@
+{
+  "LETU Blue Textured": {
+    "bgmode": "image",
+    "bgimage": "background_blue_tex.jpg",
+    "logo": "logo_white.png",
+    "fgtext": "black",
+    "bgtext": "white",
+    "buttons": "#e3bd34",
+    "buttonsActive": "#f3dd74",
+    "statusBar": "#e3bd34",
+    "divider": "#e3bd34"
+  },
+  "LETU Blue": {
+    "bgmode": "color",
+    "bgcolor": "#193269",
+    "logo": "logo_white.png",
+    "fgtext": "black",
+    "bgtext": "white",
+    "buttons": "#e3bd34",
+    "buttonsActive": "#f3dd74",
+    "statusBar": "#e3bd34",
+    "divider": "#e3bd34"
+  },
+  "LETU Gold": {
+    "bgmode": "image",
+    "bgimage": "background_yellow_stripe.png",
+    "logo": "logo_white.png",
+    "fgtext": "white",
+    "bgtext": "white",
+    "buttons": "#193269",
+    "buttonsActive": "#89a2d9",
+    "statusBar": "#193269",
+    "divider": "#193269"
+  }
+}

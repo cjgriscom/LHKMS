@@ -36,6 +36,10 @@ public class Screen implements Serializable, JSONSerializable {
 		this.viewID = UUID.fromString(ser.getString("viewID"));
 	}
 	
+	public String getTheme() {
+		return "LETU Gold";
+	}
+	
 	public String getName() {
 		return name;
 	}

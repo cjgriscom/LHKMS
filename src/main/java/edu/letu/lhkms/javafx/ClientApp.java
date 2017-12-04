@@ -19,8 +19,12 @@ import edu.letu.lhkms.javafx.pages.editors.ContentEditor;
 import edu.letu.lhkms.javafx.pages.editors.ScreensEditor;
 import edu.letu.lhkms.javafx.pages.editors.ViewsEditor;
 import edu.letu.lhkms.javafx.pages.editors.content.ContentItemEditor;
+import edu.letu.lhkms.javafx.pages.editors.content.ScreenItemEditor;
+import edu.letu.lhkms.javafx.pages.editors.content.ViewItemEditor;
 import edu.letu.lhkms.structure.CompleteDatabasePipeline;
 import edu.letu.lhkms.structure.Content;
+import edu.letu.lhkms.structure.Screen;
+import edu.letu.lhkms.structure.View;
 import javafx.application.Application;
 import javafx.beans.binding.StringExpression;
 import javafx.beans.binding.When;
@@ -170,6 +174,28 @@ public class ClientApp extends Application {
 				}
 				contentEditor.getChildren().add(child);
 			}
+			
+			for (View v : db.get().viewList()) {
+				TreeItem<ContainerChild> child;
+				if (cachedContainers.containsKey(v.getViewID())) {
+					child = getTreeItemByUUID(v.getViewID());
+				} else {
+					cachedContainers.put(v.getViewID(), 
+							child = new TreeItem<>(new ViewItemEditor(v, container)));
+				}
+				viewsEditor.getChildren().add(child);
+			}
+			
+			for (Screen s: db.get().screenList()) {
+				TreeItem<ContainerChild> child;
+				if (cachedContainers.containsKey(s.getScreenID())) {
+					child = getTreeItemByUUID(s.getScreenID());
+				} else {
+					cachedContainers.put(s.getScreenID(), 
+							child = new TreeItem<>(new ScreenItemEditor(s, db.get().viewList(), container)));
+				}
+				screensEditor.getChildren().add(child);
+			}
 			// TODO the rest
 		} else {
 			breadcrumb.setSelectedCrumb(home); 
@@ -182,7 +208,7 @@ public class ClientApp extends Application {
 		String address = this.address.getText();
 		
 		try {
-			String jsonDB = HTTPUtil.sendGet("http://" + address + "/testDatabase");
+			String jsonDB = HTTPUtil.sendGet("http://" + address + "/getDatabase");
 			db.set(new CompleteDatabasePipeline(new JSONObject(jsonDB)));
 			loaded.set(true);  // It's important that this comes before rebuildTree
 			// Otherwise it won't populate the breadcrumb

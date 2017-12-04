@@ -5,8 +5,6 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -21,6 +19,8 @@ import java.util.regex.Matcher;
 import org.json.JSONObject;
 
 import edu.letu.lhkms.HTTPUtil;
+import edu.letu.lhkms.ThemeManager;
+import edu.letu.lhkms.Util;
 import edu.letu.lhkms.db.FlatJSON;
 import edu.letu.lhkms.structure.CompleteDatabasePipeline;
 import edu.letu.lhkms.structure.Content;
@@ -114,7 +114,7 @@ public class App extends NanoHTTPD {
 	public Response serve(IHTTPSession session) {
 		Map<String, List<String>> parms = session.getParameters();
 		
-		System.out.println(session.getUri());
+		//System.out.println(session.getUri());
 		switch(session.getUri()) {
 		case "/screen": try {
 				return newFixedLengthResponse(Status.OK, HTML, getScreen(
@@ -199,12 +199,24 @@ public class App extends NanoHTTPD {
 		if (screen != null) {
 			View v = findByUUID(screen.getViewID(), db.viewList(), (view)->{return view.getViewID();});
 			if (v != null) {
-				String template = read("screen_code/screen_template.html");
-
+				String template = Util.readWeb("screen_code/screen_template.html");
+				
+				JSONObject theme = ThemeManager.themeList.getJSONObject(screen.getTheme());
+				
+				for (String s : new String[] {"fgtext", "bgtext", "logo", "buttons", "buttonsActive", "statusBar", "divider"}) {
+					template = replaceNode("theme css " + s, theme.getString(s), template); 
+				}
+				if (theme.getString("bgmode").equals("color")) {
+					template = replaceNode("theme css bg", "background-color: " + theme.getString("bgcolor") + ";", template);
+				} else {
+					template = replaceNode("theme css bg", "background-image: url(\"" + theme.getString("bgimage") + "\");", template);
+				}
+				
+				
 				StatusBar sb = v.getStatusBar();
 				if (sb.hasStocks()) {
-					String stock_ajax_js = read("screen_code/stock_ajax.js");
-					String stock_tablecell_html = read("screen_code/stock_tablecell.html");
+					String stock_ajax_js = Util.readWeb("screen_code/stock_ajax.js");
+					String stock_tablecell_html = Util.readWeb("screen_code/stock_tablecell.html");
 					
 					StringBuilder stock_ajax = new StringBuilder();
 					StringBuilder stock_table = new StringBuilder();
@@ -261,11 +273,6 @@ public class App extends NanoHTTPD {
 			}
 		}
 		return null;
-	}
-	
-	private String read(String filename) throws IOException, URISyntaxException {
-		return new String(Files.readAllBytes(Paths.get(
-				App.class.getResource("/WebContent/"+filename).toURI())));
 	}
 
 	public Response get404() {

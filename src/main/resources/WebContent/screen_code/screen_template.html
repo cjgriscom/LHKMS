@@ -4,7 +4,7 @@
 <head>
 <title>LHKMS</title>
 
-<link rel="stylesheet" href="fonts/stylesheet.css" type="text/css" charset="utf-8" />
+<link rel="stylesheet" href="fonts/stylesheet.css" type="text/css" />
 
 <script type="text/javascript" src="jquery-1.6.2.min.js"></script>
 
@@ -99,29 +99,21 @@ function hideShow5() {
 
 <style type="text/css">
 
-#currentTime {
-  font-size: 3em;
-  text-align: center;
-  font-weight: 300;
-  border: 1px solid white;
-}
-
-
-
 body {
-	background-image: url("background.png");
 	background-size: cover; 
+	
+	{theme css bg}
 } 
 
 header {
     padding: 1em;
-    color: white;
+    color: {theme css bgtext};
     clear: left;
     text-align: left;
 }
 footer {
 	padding: 1em;
-    color: white;
+    color: {theme css fgtext};
     clear: left;
     text-align: left;
     max-hieght: 1160px;
@@ -155,7 +147,7 @@ tradingview span.description {
 }
 
 .lucida {
-	font-family: "lucida_brightdemibold", Wingdings, Arial, sans-serif;
+	font-family: "lucida_brightdemibold", Cambria, Arial, sans-serif;
 }
 .tS {
 	font-size: 24pt
@@ -166,6 +158,7 @@ tradingview span.description {
 
 #websiteLogo {
 	float: left;
+	width:300px;
 }
 
 #cover {
@@ -211,11 +204,11 @@ tradingview span.description {
     margin-left: auto;
 }   
 #bside {
- position:absolute;
- top:0;
- right:0;
- }
- 
+    position:absolute;
+    top:0;
+    right:0;
+}
+
 .iframe_container {
     clear: both;
     width: 100%;
@@ -226,10 +219,10 @@ tradingview span.description {
 
 .button {
     position: relative;
-    background-color: #4CAF50;
+    background-color: {theme css buttons};
     border: none;
     font-size: 28px;
-    color: #FFFFFF;
+    color: {theme css fgtext};
     padding: 20px;
     width: 350px;
     height:100px;
@@ -244,7 +237,7 @@ tradingview span.description {
 
 .button:after {
     content: "";
-    background: #f1f1f1;
+    background: {theme css buttonsActive};
     display: block;
     position: absolute;
     padding-top: 300%;
@@ -262,7 +255,25 @@ tradingview span.description {
     transition: 0s
 }
 
+.timebox {
+    font-family: "lucida_brightdemibold", Cambria, Arial, sans-serif;
+    padding: 5px 10px 5px 10px;
+    margin: 0px 0px 10px 15px;
+    float: right;
+    background-color:{theme css divider};
+    color:{theme css fgcolor};
+    font-size: 3em;
+    text-align: center;
+    font-weight: 300;
+}
 
+.marquee {
+    background-color: {theme css statusBar};
+}
+
+.statusbar_cell {
+    color: {theme css fgtext};
+}
 </style>
 
 <script>
@@ -314,10 +325,10 @@ window.onload = function() {
 
 <header>
    
-   <img id="websiteLogo" alt="LETU Logo" src="logo_white.png"/>
+   <img id="websiteLogo" alt="LETU Logo" src="{theme css logo}"/>
    <h1 class="lucida"><span class="tB">S</span><span class="tS">CHOOL OF </span><span class="tB">B</span><span class="tS">USINESS</span></h1>
    <div style="float: right;">
-   <h1 class="lucida" style="margin: 0px 5px 5px 15px;float: right;color:black"id="currentTime"></h1>
+   <h1 class="timebox" id="currentTime"></h1>
    </div>
 
 </header>
@@ -366,37 +377,27 @@ window.setInterval(function(){
 }, 1000);
 </script>
 
-<marquee bgcolor="#485e82" behavior="scroll" scrollamount="10" direction="left" style= "float: left;" >
+<marquee class="marquee" behavior="scroll" scrollamount="10" direction="left" style="float: left;" >
 
 <table>
 <tbody>
 <tr>
-<td >Stocks:  </td>
 {list stock_tablecell.html}
 
 
-<td >Weather:  </td>
-<td>
+<!--td>
 <div style="width: 850px;"><iframe style="display: block;" src="https://cdnres.willyweather.com/widget/loadView.html?id=76653" width="850" height="92" frameborder="0" scrolling="no"></iframe><a style="height: 92px;width: 20px;text-indent: -9999em;float: right;position: relative;z-index: 1;margin: -92px 0 0 0" href="https://www.willyweather.com/tx/gregg-county/longview.html" rel="nofollow">weather</a></div>
-
-
 </td>
+-->
+
 </tr>
 </tbody>
 </table>
 
 
-
-
-
-
-
-
 <!--  <div class="statusbar" id="statusbar"></div>
 <div class="statusbar1" id="statusbar1"></div>-->
 </marquee>
-
-
 
 
 </footer>
