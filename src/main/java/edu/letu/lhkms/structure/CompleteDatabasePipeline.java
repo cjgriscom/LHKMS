@@ -33,7 +33,7 @@ public class CompleteDatabasePipeline implements JSONSerializable, Serializable 
 	}
 	
 	public CompleteDatabasePipeline(FlatJSON vl) { // Construct from Server DB
-		this(new JSONObject(vl.data()));
+		this(new JSONObject(vl.data().get()));
 	}
 	
 	public CompleteDatabasePipeline(JSONObject ser) { // Construct from JSON

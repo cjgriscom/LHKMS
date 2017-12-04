@@ -2,13 +2,21 @@ package edu.letu.lhkms.nanohttpd;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Function;
+import java.util.regex.Matcher;
 
 import org.json.JSONObject;
 
@@ -18,6 +26,7 @@ import edu.letu.lhkms.structure.CompleteDatabasePipeline;
 import edu.letu.lhkms.structure.Content;
 import edu.letu.lhkms.structure.LoadableContent;
 import edu.letu.lhkms.structure.Screen;
+import edu.letu.lhkms.structure.StatusBar;
 import edu.letu.lhkms.structure.View;
 import fi.iki.elonen.NanoHTTPD;
 import fi.iki.elonen.NanoHTTPD.Response.Status;
@@ -27,6 +36,7 @@ public class App extends NanoHTTPD {
 	
 	private static final String JSON = "application/json";
 	private static final String PLAINTEXT = "text/plain";
+	private static final String HTML = "text/html";
 	
 	private final AtomicBoolean running = new AtomicBoolean(false);
 	
@@ -46,6 +56,16 @@ public class App extends NanoHTTPD {
 		testView1.getButtonBox().addEntry("VirtProto Btn", new LoadableContent(slidesDoc.getContentID()));
 		testView1.getButtonBox().addEntry("Baseball!!!", new LoadableContent(baseball.getContentID()));
 		testView1.setDefaultContent(baseball.getContentID());
+		
+		testView1.getStatusBar().getStocks().addAll(Arrays.asList(
+				"NVDA", "AMD", "AAPL", "INTC",
+				"GOOGL", "AMZN", "FB", "TWTR",
+				"MSFT", "GE", "NFLX", "TSLA", 
+				"VEZ", "DIS", "WMP", "T",
+				"SBUX", "XOM"
+				));
+		
+		
 		testDB.viewList().add(testView1);
 		
 		testDB.contentList().add(slidesDoc);
@@ -96,6 +116,15 @@ public class App extends NanoHTTPD {
 		
 		System.out.println(session.getUri());
 		switch(session.getUri()) {
+		case "/screen": try {
+				return newFixedLengthResponse(Status.OK, HTML, getScreen(
+						parms.get("uuid") == null ? null : parms.get("uuid").get(0),
+						parms.get("name") == null ? null : parms.get("name").get(0)));
+			} catch (Exception e) {
+				e.printStackTrace();
+				return newFixedLengthResponse(Status.OK, PLAINTEXT, "Unhandled exception loading screen");
+			}
+			
 		case "/stock": try {
 				if (parms.containsKey("sym")) {
 					return newFixedLengthResponse(Status.OK, PLAINTEXT, RobinhoodAPI.getStockTable(
@@ -157,6 +186,86 @@ public class App extends NanoHTTPD {
 		}
 		}
 		
+	}
+
+	private String getScreen(String uuid, String name) throws IOException, URISyntaxException {
+		if (uuid == null && name == null) return "A screen uuid or name parameter must be supplied";
+		CompleteDatabasePipeline db = new CompleteDatabasePipeline(flatDB);
+
+		Screen screen;
+		if (uuid != null) screen = findByUUID(uuid, db.screenList(), (s)->{return s.getScreenID();});
+		else screen = findByString(name, db.screenList(), (s)->{return s.getName();});
+		
+		if (screen != null) {
+			View v = findByUUID(screen.getViewID(), db.viewList(), (view)->{return view.getViewID();});
+			if (v != null) {
+				String template = read("screen_code/screen_template.html");
+
+				StatusBar sb = v.getStatusBar();
+				if (sb.hasStocks()) {
+					String stock_ajax_js = read("screen_code/stock_ajax.js");
+					String stock_tablecell_html = read("screen_code/stock_tablecell.html");
+					
+					StringBuilder stock_ajax = new StringBuilder();
+					StringBuilder stock_table = new StringBuilder();
+					
+					int i = 0;
+					for (String sym : sb.getStocks()) {
+						stock_ajax.append(
+								replaceNode("sym", sym, 
+								replaceNode("i", i+"", stock_ajax_js))
+								);
+						stock_table.append(
+								replaceNode("i", i+"", stock_tablecell_html)
+								);
+						i++;
+					}
+					template = replaceNode("list stock_ajax.js", stock_ajax.toString(), template);
+					template = replaceNode("list stock_tablecell.html", stock_table.toString(), template);
+				}
+				return template;
+			} else {
+				return "The view referenced by this screen does not exist";
+			}
+		} else {
+			return "The specified screen could not be found";
+		}
+	}
+	
+	private String replaceNode(String nodeName, String replacement, String src) {
+		return src.replaceAll("\\{"+nodeName+"\\}", Matcher.quoteReplacement(replacement));
+	}
+	
+	private <T> T findByUUID(UUID uuid, Collection<T> list, Function<T, UUID> idFunc) {
+		for (T s : list) {
+			if (idFunc.apply(s).equals(uuid)) {
+				return s;
+			}
+		}
+		return null;
+	}
+	
+	private <T> T findByUUID(String uuid, Collection<T> list, Function<T, UUID> idFunc) {
+		for (T s : list) {
+			if (idFunc.apply(s).toString().equals(uuid)) {
+				return s;
+			}
+		}
+		return null;
+	}
+
+	private <T> T findByString(String str, Collection<T> list, Function<T, String> strFunc) {
+		for (T s : list) {
+			if (strFunc.apply(s).equals(str)) {
+				return s;
+			}
+		}
+		return null;
+	}
+	
+	private String read(String filename) throws IOException, URISyntaxException {
+		return new String(Files.readAllBytes(Paths.get(
+				App.class.getResource("/WebContent/"+filename).toURI())));
 	}
 
 	public Response get404() {

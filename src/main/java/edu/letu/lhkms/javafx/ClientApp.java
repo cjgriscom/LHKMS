@@ -182,7 +182,7 @@ public class ClientApp extends Application {
 		String address = this.address.getText();
 		
 		try {
-			String jsonDB = HTTPUtil.sendGet("http://" + address + "/getDatabase");
+			String jsonDB = HTTPUtil.sendGet("http://" + address + "/testDatabase");
 			db.set(new CompleteDatabasePipeline(new JSONObject(jsonDB)));
 			loaded.set(true);  // It's important that this comes before rebuildTree
 			// Otherwise it won't populate the breadcrumb

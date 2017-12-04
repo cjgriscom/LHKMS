@@ -3,10 +3,10 @@ package edu.letu.lhkms.browser;
 import java.io.IOException;
 
 public class BrowserManager {
-	public static void main(String[] args) throws IOException, InterruptedException {
+	public static void launchBrowser() throws IOException, InterruptedException {
 		// Windows
-		Runtime.getRuntime().exec(new String[]{"cmd", "/c",
-				"start chrome --incognito --kiosk http://localhost:8080/test.html"}).waitFor();
+		//Runtime.getRuntime().exec(new String[]{"cmd", "/c",
+		//		"start chrome --incognito --kiosk http://localhost:8080/test.html"}).waitFor();
 		
 		// Try this if the other don't work
 		/*
@@ -15,9 +15,13 @@ public class BrowserManager {
 		
 		 */
 		
-		/*// Linux
+		// Linux
 		Runtime.getRuntime().exec(new String[]{"bash", "-c",
 				"chromium --incognito --kiosk http://localhost:8080/test.html"});
-		*/
+		
+	}
+	
+	public static void main(String[] args) throws IOException, InterruptedException {
+		launchBrowser();
 	}
 }
