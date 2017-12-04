@@ -37,7 +37,7 @@ public class Screen implements Serializable, JSONSerializable {
 	}
 	
 	public String getTheme() {
-		return "LETU Gold";
+		return "LETU Blue Textured";
 	}
 	
 	public String getName() {
