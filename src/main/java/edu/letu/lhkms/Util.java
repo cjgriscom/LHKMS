@@ -28,13 +28,20 @@ public class Util {
 	private static File storageRoot = null;
 	
 	public static String readWeb(String filename) throws IOException, URISyntaxException {
-		return new String(Files.readAllBytes(Paths.get(
-				Util.class.getResource("/WebContent/"+filename).toURI())));
+		//return new String(Files.readAllBytes(Paths.get(
+		//		Util.class.getResource("/WebContent/"+filename).toURI())));
+		
+		InputStream is = Util.class.getResourceAsStream("/WebContent/"+filename);
+		@SuppressWarnings("resource")
+		java.util.Scanner scanner = new java.util.Scanner(is).useDelimiter("\\A");
+		return scanner.hasNext() ? scanner.next() : "";
 	}
 	
 	public static String read(String filename) throws IOException, URISyntaxException {
-		return new String(Files.readAllBytes(Paths.get(
-				Util.class.getResource("/"+filename).toURI())));
+		InputStream is = Util.class.getResourceAsStream("/"+filename);
+		@SuppressWarnings("resource")
+		java.util.Scanner scanner = new java.util.Scanner(is).useDelimiter("\\A");
+		return scanner.hasNext() ? scanner.next() : "";
 	}
 	
 	/**

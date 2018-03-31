@@ -47,15 +47,15 @@ public class App extends NanoHTTPD {
 	CompleteDatabasePipeline testDB = new CompleteDatabasePipeline();
 	private void setupTest() {
 		Content slidesDoc = new Content("Virtual Prototype", 
-				Content.Type.Slides, "https://docs.google.com/presentation/d/e/2PACX-1vRYaSEFJhJibDZ__KUn0Rn_VttvgEge9RpZ-XC753ZOgihALxtL5o3UonkD10-Qs2v0oPy-KfWgt--T/embed?start=true&loop=true&delayms=3000");
-		Content baseball = new Content("Baseball", 
-				Content.Type.YouTube, "https://www.youtube.com/embed/kt5VeNNf7iI");
+				Content.Type.Slides, "https://docs.google.com/presentation/d/e/2PACX-1vSG_7t6YBVdGfZeV5glRTLP9t6RuyO6cTHvatUa-_A6Y9C7cfIVV2OIDKWzFy-6-gq3JjSZn71jNOsu/pub?start=true&loop=true&delayms=7000&slide=id.p");
+		//Content baseball = new Content("Baseball", 
+		//		Content.Type.YouTube, "https://www.youtube.com/embed/kt5VeNNf7iI");
 		
 		View testView1 = new View("Test View 1");
 		testView1.getStatusBar().setWeather(true);
 		testView1.getButtonBox().addEntry("VirtProto Btn", new LoadableContent(slidesDoc.getContentID()));
-		testView1.getButtonBox().addEntry("Baseball!!!", new LoadableContent(baseball.getContentID()));
-		testView1.setDefaultContent(baseball.getContentID());
+		//testView1.getButtonBox().addEntry("Baseball!!!", new LoadableContent(baseball.getContentID()));
+		testView1.setDefaultContent(slidesDoc.getContentID());
 		
 		testView1.getStatusBar().getStocks().addAll(Arrays.asList(
 				"NVDA", "AMD", "AAPL", "INTC",
@@ -69,7 +69,7 @@ public class App extends NanoHTTPD {
 		testDB.viewList().add(testView1);
 		
 		testDB.contentList().add(slidesDoc);
-		testDB.contentList().add(baseball);
+		//testDB.contentList().add(baseball);
 		
 		Screen onlyScreen = new Screen("LeftScreen", testView1.getViewID());
 		testDB.screenList().add(onlyScreen);
@@ -79,6 +79,7 @@ public class App extends NanoHTTPD {
 		super(8080);
 		setupTest();
 		flatDB = new FlatJSON(); // Init flat database
+		//flatDB.setFrom(testDB);
 		start(NanoHTTPD.SOCKET_READ_TIMEOUT, false);
 		running.set(true);
 		System.out.println("\nRunning! Point your browser to http://127.0.0.1:8080/ \n");
