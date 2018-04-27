@@ -15,6 +15,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONObject;
 
+import edu.letu.lhkms.Util;
+
 public class RobinhoodAPI {
 	static final String URL = "https://api.robinhood.com";
 	static final String QUOTES = "/quotes";
@@ -37,8 +39,8 @@ public class RobinhoodAPI {
 		
 		String image = up ? "icons/StockUP.png" : "icons/StockDOWN.png";
 		
-		String table = new String(Files.readAllBytes(Paths.get(
-				RobinhoodAPI.class.getResource("/WebContent/stockTable.html").toURI())))
+		String table = 
+				Util.readWeb("stockTable.html")
 				.replaceAll("\\{SYM\\}", symbol)
 				.replaceAll("\\{IMG\\}", image)
 				.replaceAll("\\{PRICE\\}", df.format(price))
